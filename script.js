@@ -197,7 +197,7 @@ function draw() {
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 36px Inter';
         ctx.textAlign = 'center';
-        ctx.fillText('ICY TOWER', canvas.width / 2, 150);
+        ctx.fillText('JUMP', canvas.width / 2, 150);
         
         ctx.font = '18px Inter';
         ctx.fillStyle = '#a0aec0';
@@ -393,11 +393,11 @@ window.addEventListener('resize', () => {
     resizeParticleCanvas();
 });
 
-// Playground Tab Switching
+// Playground Tab Switching - Simplified for single game tab
 const playgroundTabs = document.querySelectorAll('.playground-tab');
 const playgroundContents = document.querySelectorAll('.playground-content');
-const runCodeBtn = document.getElementById('runCodeBtn');
 
+// Since there's only one tab now, we can simplify or remove this logic
 playgroundTabs.forEach(tab => {
     tab.addEventListener('click', () => {
         const tabName = tab.getAttribute('data-tab');
@@ -414,31 +414,79 @@ playgroundTabs.forEach(tab => {
         if (content) {
             content.classList.add('active');
         }
-        
-        // Show/hide run button (only for code tabs, not game)
-        if (tabName === 'game') {
-            runCodeBtn.style.display = 'none';
-        } else {
-            runCodeBtn.style.display = 'block';
-        }
     });
 });
 
-// Run Code button functionality
-runCodeBtn.addEventListener('click', () => {
-    alert('Code executed! Check console for output.');
-});
-
-// Theme Toggle
+// Enhanced Theme Toggle with System Detection
 const themeToggle = document.getElementById('themeToggle');
 const bodyEl = document.body;
 let isDark = true;
+
+// Check system preference
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme) {
+    isDark = savedTheme === 'dark';
+} else {
+    isDark = prefersDark;
+}
+
+// Apply initial theme
+bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!savedTheme) {
+        isDark = e.matches;
+        bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
+    }
+});
 
 themeToggle.addEventListener('click', () => {
     isDark = !isDark;
     bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
     themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
+    
+    // Save preference
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    // Add ripple effect
+    const ripple = document.createElement('div');
+    ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        pointer-events: none;
+        width: 20px;
+        height: 20px;
+        left: 50%;
+        top: 50%;
+        margin-left: -10px;
+        margin-top: -10px;
+    `;
+    
+    themeToggle.style.position = 'relative';
+    themeToggle.appendChild(ripple);
+    
+    setTimeout(() => ripple.remove(), 600);
 });
+
+// Add ripple animation
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(rippleStyle);
 
 // Navbar Scroll Effect
 const navbar = document.getElementById('navbar');
@@ -450,7 +498,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Counter Animation
+// Enhanced Scroll Animations
 const animateCounter = (element) => {
     const target = parseInt(element.getAttribute('data-target'));
     const duration = 2000;
@@ -460,37 +508,67 @@ const animateCounter = (element) => {
     const updateCounter = () => {
         current += increment;
         if (current < target) {
-            element.textContent = Math.floor(current) + (target === 98 ? '%' : '+');
+            element.textContent = Math.floor(current) + (target === 100 ? '%' : '+');
             requestAnimationFrame(updateCounter);
         } else {
-            element.textContent = target + (target === 98 ? '%' : '+');
+            element.textContent = target + (target === 100 ? '%' : '+');
         }
     };
 
     updateCounter();
 };
 
+// Enhanced Intersection Observer for scroll animations
 const observerOptions = {
-    threshold: 0.5
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+            // Counter animation for hero stats
             const counters = entry.target.querySelectorAll('.stat-number');
             counters.forEach(counter => {
                 if (counter.textContent === '0') {
                     animateCounter(counter);
                 }
             });
+            
+            // Add animation classes for scroll-triggered elements
+            entry.target.classList.add('animate-in');
         }
     });
 }, observerOptions);
 
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) {
-    observer.observe(heroStats);
-}
+// Observe elements for scroll animations
+const elementsToAnimate = document.querySelectorAll('.hero-stats, .skill-card, .project-card, .section-title, .section-subtitle, .quote-card');
+elementsToAnimate.forEach(element => {
+    observer.observe(element);
+});
+
+// Add CSS classes for scroll animations
+const style = document.createElement('style');
+style.textContent = `
+    .skill-card, .project-card {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .skill-card.animate-in, .project-card.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .skill-card:nth-child(1) { transition-delay: 0.1s; }
+    .skill-card:nth-child(2) { transition-delay: 0.2s; }
+    .skill-card:nth-child(3) { transition-delay: 0.3s; }
+    .skill-card:nth-child(4) { transition-delay: 0.4s; }
+    .skill-card:nth-child(5) { transition-delay: 0.5s; }
+    .skill-card:nth-child(6) { transition-delay: 0.6s; }
+`;
+document.head.appendChild(style);
 
 // GitHub Activity Grid
 const activityGrid = document.getElementById('activityGrid');

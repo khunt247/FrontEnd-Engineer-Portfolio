@@ -11,10 +11,6 @@
     <canvas id="particleCanvas"></canvas>
     <div class="modal-backdrop" id="modalBackdrop"></div>
 
-    <div class="theme-toggle" id="themeToggle">
-        <span class="theme-icon">🌙</span>
-    </div>
-
     <div class="perf-monitor">
         <span class="fps">FPS: <span id="fps">60</span></span> | 
         Load: <span id="loadTime">0</span>ms
@@ -32,13 +28,20 @@
     </div>
 
     <nav id="navbar">
-        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Katie Hunt</div>
-        <ul class="nav-links">
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#playground">Playground</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <span class="logo-letter">K</span><span class="logo-letter">a</span><span class="logo-letter">t</span><span class="logo-letter">i</span><span class="logo-letter">e</span><span class="logo-space"> </span><span class="logo-letter">H</span><span class="logo-letter">u</span><span class="logo-letter">n</span><span class="logo-letter">t</span>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#playground">Playground</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="theme-toggle" id="themeToggle">
+                <span class="theme-icon">🌙</span>
+            </div>
+        </div>
     </nav>
 
     <section class="hero">
@@ -58,7 +61,7 @@
                         <div class="stat-label">Projects</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-number" data-target="100">0</div>
                         <div class="stat-label">Satisfaction</div>
                     </div>
                 </div>
@@ -101,6 +104,18 @@
                     </div>
                     <div class="activity-grid" id="activityGrid"></div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inspirational Quote Section -->
+    <section class="quote-section">
+        <div class="quote-card">
+            <div class="quote-content">
+                <blockquote class="quote-text">
+                    "Excellence is never an accident. It is always the result of high intention, sincere effort, and intelligent execution; it represents the wise choice of many alternatives - choice, not chance, determines your destiny."
+                </blockquote>
+                <cite class="quote-attribution">― Aristotle</cite>
             </div>
         </div>
     </section>
@@ -184,92 +199,6 @@
         </div>
     </section>
 
-    <section id="playground" class="playground-section">
-        <h2 class="section-title">Code Playground</h2>
-        <p class="section-subtitle">Interactive examples of my work - try the game or run the code!</p>
-
-        <div class="playground-container">
-            <div class="playground-header">
-                <div class="playground-tabs">
-                    <button class="playground-tab active" data-tab="game">🎮 Icy Tower Game</button>
-                    <button class="playground-tab" data-tab="javascript">JavaScript</button>
-                    <button class="playground-tab" data-tab="react">React</button>
-                    <button class="playground-tab" data-tab="css">CSS</button>
-                </div>
-                <button class="run-button" id="runCodeBtn" style="display: none;">▶ Run Code</button>
-            </div>
-
-            <!-- Game Tab -->
-            <div class="playground-content active" id="game-content">
-                <div class="game-container">
-                    <canvas id="gameCanvas" width="400" height="600"></canvas>
-                    <div class="game-info">
-                        <p><strong>Controls:</strong> Arrow Keys / A-D to move | Space / W / Up Arrow to jump | R to restart</p>
-                    </div>
-                    <div class="game-controls">
-                        <span class="control-key">← → Move</span>
-                        <span class="control-key">Space Jump</span>
-                        <span class="control-key">R Restart</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- JavaScript Tab -->
-            <div class="playground-content" id="javascript-content">
-                <div class="playground-editor"><span class="code-comment">// Fibonacci sequence generator</span>
-<span class="code-keyword">function</span> <span class="code-function">fibonacci</span>(<span class="code-keyword">n</span>) {
-  <span class="code-keyword">if</span> (n <= <span class="code-number">1</span>) <span class="code-keyword">return</span> n;
-  <span class="code-keyword">return</span> <span class="code-function">fibonacci</span>(n - <span class="code-number">1</span>) + <span class="code-function">fibonacci</span>(n - <span class="code-number">2</span>);
-}
-
-<span class="code-comment">// Generate first 10 Fibonacci numbers</span>
-<span class="code-keyword">const</span> sequence = Array.<span class="code-function">from</span>({ length: <span class="code-number">10</span> }, (_, i) => <span class="code-function">fibonacci</span>(i));
-console.<span class="code-function">log</span>(<span class="code-string">'Fibonacci:'</span>, sequence);
-<span class="code-comment">// Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</span></div>
-            </div>
-
-            <!-- React Tab -->
-            <div class="playground-content" id="react-content">
-                <div class="playground-editor"><span class="code-comment">// React Counter Component</span>
-<span class="code-keyword">import</span> { useState } <span class="code-keyword">from</span> <span class="code-string">'react'</span>;
-
-<span class="code-keyword">function</span> <span class="code-function">Counter</span>() {
-  <span class="code-keyword">const</span> [count, setCount] = <span class="code-function">useState</span>(<span class="code-number">0</span>);
-
-  <span class="code-keyword">return</span> (
-    &lt;div className=<span class="code-string">"counter"</span>&gt;
-      &lt;h2&gt;Count: {count}&lt;/h2&gt;
-      &lt;button onClick={() => <span class="code-function">setCount</span>(count + <span class="code-number">1</span>)}&gt;
-        Increment
-      &lt;/button&gt;
-    &lt;/div&gt;
-  );
-}</div>
-            </div>
-
-            <!-- CSS Tab -->
-            <div class="playground-content" id="css-content">
-                <div class="playground-editor"><span class="code-comment">/* Modern Button with Glassmorphism */</span>
-<span class="code-keyword">.glass-button</span> {
-  <span class="code-function">background</span>: <span class="code-string">rgba(255, 255, 255, 0.1)</span>;
-  <span class="code-function">backdrop-filter</span>: <span class="code-string">blur(10px)</span>;
-  <span class="code-function">border</span>: <span class="code-string">1px solid rgba(255, 255, 255, 0.2)</span>;
-  <span class="code-function">border-radius</span>: <span class="code-string">12px</span>;
-  <span class="code-function">padding</span>: <span class="code-string">1rem 2rem</span>;
-  <span class="code-function">color</span>: <span class="code-string">white</span>;
-  <span class="code-function">cursor</span>: <span class="code-string">pointer</span>;
-  <span class="code-function">transition</span>: <span class="code-string">all 0.3s ease</span>;
-}
-
-<span class="code-keyword">.glass-button:hover</span> {
-  <span class="code-function">background</span>: <span class="code-string">rgba(255, 255, 255, 0.2)</span>;
-  <span class="code-function">transform</span>: <span class="code-function">translateY</span>(<span class="code-string">-2px</span>);
-  <span class="code-function">box-shadow</span>: <span class="code-string">0 10px 30px rgba(0, 0, 0, 0.3)</span>;
-}</div>
-            </div>
-        </div>
-    </section>
-
     <section id="projects" class="projects-section">
         <h2 class="section-title">Featured Projects</h2>
         <p class="section-subtitle">A selection of my recent work showcasing technical excellence</p>
@@ -328,6 +257,35 @@ console.<span class="code-function">log</span>(<span class="code-string">'Fibona
                     </div>
                 </div>
             </article>
+        </div>
+    </section>
+
+    <section id="playground" class="playground-section">
+        <h2 class="section-title">Interactive Game Showcase</h2>
+        <p class="section-subtitle">A fully playable platformer game built with vanilla JavaScript and Canvas API</p>
+
+        <div class="playground-container">
+            <div class="playground-header">
+                <div class="playground-tabs">
+                    <button class="playground-tab active" data-tab="game">🎮 Jump</button>
+                </div>
+            </div>
+
+            <!-- Game Tab -->
+            <div class="playground-content active" id="game-content">
+                <div class="game-container">
+                    <canvas id="gameCanvas" width="400" height="600"></canvas>
+                    <div class="game-info">
+                        <p><strong>Controls:</strong> Arrow Keys / A-D to move | Space / W / Up Arrow to jump | R to restart</p>
+                    </div>
+                    <div class="game-controls">
+                        <span class="control-key">← → Move</span>
+                        <span class="control-key">Space Jump</span>
+                        <span class="control-key">R Restart</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
