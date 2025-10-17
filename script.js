@@ -946,34 +946,6 @@ terminalInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Contact Form
-const contactForm = document.getElementById('contactForm');
-const formSuccess = document.getElementById('formSuccess');
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form data
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    
-    // Create mailto link with form data
-    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    const mailtoLink = `mailto:katiehunt95@gmail.com?subject=${subject}&body=${body}`;
-    
-    // Open user's email client
-    window.location.href = mailtoLink;
-    
-    // Show success message
-    formSuccess.style.display = 'block';
-    contactForm.reset();
-    
-    setTimeout(() => {
-        formSuccess.style.display = 'none';
-    }, 5000);
-});
 
 // Performance Monitor
 let lastTime = performance.now();
