@@ -4,6 +4,30 @@
     box-sizing: border-box;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00d4ff;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00b8e6;
+}
+
+/* Firefox scrollbar */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #00d4ff rgba(0, 0, 0, 0.1);
+}
+
 :root {
     /* Design System - Color Tokens */
     --bg-primary: #0a0e27;
@@ -1483,7 +1507,7 @@ nav {
     
     .control-btn {
         padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
+    font-size: 0.85rem;
     }
     
     .achievement-badge {
@@ -1598,6 +1622,316 @@ nav {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
+}
+
+.contact-social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-6);
+    margin: var(--space-8) 0 var(--space-12) 0;
+    animation: fadeInUp 1s var(--transition-spring) 0.3s both;
+}
+
+.contact-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, 
+        rgba(0, 212, 255, 0.1), 
+        rgba(123, 47, 247, 0.1));
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: all var(--transition-spring);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 4px 20px rgba(0, 212, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.contact-social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 212, 255, 0.3), 
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.contact-social-link:hover::before {
+    left: 100%;
+}
+
+.contact-social-link:hover {
+    transform: translateY(-3px) scale(1.05);
+    border-color: rgba(0, 212, 255, 0.6);
+    box-shadow: 
+        0 8px 30px rgba(0, 212, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: #00d4ff;
+}
+
+.contact-social-link:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* Email Modal */
+.email-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+}
+
+.email-modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.email-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    z-index: 1;
+}
+
+.email-modal-content {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1), 
+        rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 20px;
+    padding: var(--space-8);
+    max-width: 500px;
+    width: 100%;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 8px 32px rgba(0, 212, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.email-modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 212, 255, 0.5), 
+        transparent);
+}
+
+.email-modal-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-spring);
+    z-index: 3;
+}
+
+.email-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-primary);
+    transform: scale(1.1);
+}
+
+.email-modal-header {
+    text-align: center;
+    margin-bottom: var(--space-6);
+}
+
+.email-modal-header h3 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.email-modal-body {
+    text-align: center;
+}
+
+.email-display {
+    font-family: 'Courier New', monospace;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    background: linear-gradient(135deg, 
+        rgba(0, 212, 255, 0.1), 
+        rgba(123, 47, 247, 0.1));
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 12px;
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-6);
+    user-select: all;
+    cursor: text;
+    transition: all var(--transition-spring);
+    position: relative;
+    overflow: hidden;
+}
+
+.email-display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 212, 255, 0.1), 
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.email-display:hover::before {
+    left: 100%;
+}
+
+.email-display:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+}
+
+.copy-email-btn {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-4) var(--space-8);
+    cursor: pointer;
+    transition: all var(--transition-spring);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+}
+
+.copy-email-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+    transition: left 0.6s ease;
+}
+
+.copy-email-btn:hover::before {
+    left: 100%;
+}
+
+.copy-email-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 212, 255, 0.4);
+}
+
+.copy-email-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+}
+
+.copy-success {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    color: #10b981;
+    font-weight: var(--font-weight-semibold);
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.copy-success.show {
+    display: flex;
+}
+
+.success-icon {
+    font-size: 1.2rem;
+    animation: pulse 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
 }
 
 .contact-form {
@@ -1844,7 +2178,7 @@ footer {
     .nav-links {
         display: none; /* Hide nav links on mobile - could add hamburger menu */
     }
-    
+
     .theme-toggle {
         min-width: 40px;
         min-height: 40px;
@@ -1939,5 +2273,31 @@ footer {
     .skills-grid {
         grid-template-columns: 1fr;
         gap: var(--space-4);
+    }
+    
+    .contact-social-links {
+        gap: var(--space-4);
+        margin: var(--space-6) 0 var(--space-8) 0;
+    }
+    
+    .contact-social-link {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .email-modal-content {
+        padding: var(--space-6);
+        margin: var(--space-4);
+    }
+    
+    .email-display {
+        font-size: var(--font-size-lg);
+        padding: var(--space-3) var(--space-4);
+    }
+    
+    .copy-email-btn {
+        padding: var(--space-3) var(--space-6);
+        font-size: var(--font-size-sm);
     }
 }

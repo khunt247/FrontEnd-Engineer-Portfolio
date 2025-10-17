@@ -567,7 +567,85 @@ gameLoop();
 // Initialize game showcase features when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initGameShowcase();
+    initEmailModal();
 });
+
+// ========== EMAIL MODAL ==========
+function initEmailModal() {
+    const emailModal = document.getElementById('emailModal');
+    const emailModalBackdrop = document.getElementById('emailModalBackdrop');
+    const emailModalClose = document.getElementById('emailModalClose');
+    const emailModalTriggers = document.querySelectorAll('.email-modal-trigger');
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const copySuccess = document.getElementById('copySuccess');
+    const emailDisplay = document.getElementById('emailDisplay');
+
+    // Open modal when clicking @ buttons
+    emailModalTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            openEmailModal();
+        });
+    });
+
+    // Close modal when clicking backdrop
+    emailModalBackdrop.addEventListener('click', closeEmailModal);
+
+    // Close modal when clicking close button
+    emailModalClose.addEventListener('click', closeEmailModal);
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && emailModal.classList.contains('active')) {
+            closeEmailModal();
+        }
+    });
+
+    // Copy email to clipboard
+    copyEmailBtn.addEventListener('click', async () => {
+        try {
+            const email = emailDisplay.textContent;
+            await navigator.clipboard.writeText(email);
+            
+            // Show success feedback
+            copySuccess.classList.add('show');
+            
+            // Close modal immediately after copy (as requested)
+            setTimeout(() => {
+                closeEmailModal();
+            }, 100);
+            
+        } catch (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = emailDisplay.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Show success feedback
+            copySuccess.classList.add('show');
+            
+            // Close modal immediately after copy
+            setTimeout(() => {
+                closeEmailModal();
+            }, 100);
+        }
+    });
+
+    function openEmailModal() {
+        emailModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        copySuccess.classList.remove('show'); // Reset success message
+    }
+
+    function closeEmailModal() {
+        emailModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+        copySuccess.classList.remove('show'); // Reset success message
+    }
+}
 
 // ========== END ICY TOWER GAME ==========
 

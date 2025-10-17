@@ -330,6 +330,12 @@
         <div class="contact-container">
             <h2 class="section-title">Get In Touch</h2>
             <p class="section-subtitle">Let's build something great together</p>
+            
+            <div class="contact-social-links">
+                <a href="https://github.com/khunt247" class="contact-social-link" title="GitHub - khunt247" target="_blank" rel="noopener noreferrer">G</a>
+                <a href="https://www.linkedin.com/in/katie-hunt-/" class="contact-social-link" title="LinkedIn - Katie Hunt" target="_blank" rel="noopener noreferrer">L</a>
+                <a href="#" class="contact-social-link email-modal-trigger" title="Email - katiehunt95@gmail.com" data-email="katiehunt95@gmail.com">@</a>
+            </div>
 
             <form class="contact-form" id="contactForm">
                 <div class="form-group">
@@ -359,13 +365,34 @@
                 Built with <span>HTML5</span>, <span>CSS3</span>, <span>Canvas API</span> & <span>Vanilla JS</span>
             </div>
             <div class="social-links">
-                <a href="#" class="social-link" title="GitHub">G</a>
-                <a href="#" class="social-link" title="LinkedIn">L</a>
-                <a href="#" class="social-link" title="Twitter">T</a>
-                <a href="mailto:katiehunt95@gmail.com" class="social-link" title="Email">@</a>
+                <a href="https://github.com/khunt247" class="social-link" title="GitHub - khunt247" target="_blank" rel="noopener noreferrer">G</a>
+                <a href="https://www.linkedin.com/in/katie-hunt-/" class="social-link" title="LinkedIn - Katie Hunt" target="_blank" rel="noopener noreferrer">L</a>
+                <a href="#" class="social-link email-modal-trigger" title="Email - katiehunt95@gmail.com" data-email="katiehunt95@gmail.com">@</a>
             </div>
         </div>
     </footer>
+
+    <!-- Email Copy Modal -->
+    <div class="email-modal" id="emailModal">
+        <div class="email-modal-backdrop" id="emailModalBackdrop"></div>
+        <div class="email-modal-content">
+            <button class="email-modal-close" id="emailModalClose">&times;</button>
+            <div class="email-modal-header">
+                <h3>Copy Email Address</h3>
+            </div>
+            <div class="email-modal-body">
+                <div class="email-display" id="emailDisplay">katiehunt95@gmail.com</div>
+                <button class="copy-email-btn" id="copyEmailBtn">
+                    <span class="btn-text">Copy Email</span>
+                    <span class="btn-icon">📋</span>
+                </button>
+                <div class="copy-success" id="copySuccess">
+                    <span class="success-icon">✓</span>
+                    <span class="success-text">Email copied to clipboard!</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js" defer></script>
 </body>
