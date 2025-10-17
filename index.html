@@ -52,15 +52,7 @@
                 <p class="description">I specialize in crafting high-performance, accessible web applications with modern frameworks and cutting-edge design systems. Turning complex problems into elegant, user-centered solutions.</p>
                 
                 <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-number" data-target="5">0</div>
-                        <div class="stat-label">Years</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number" data-target="50">0</div>
-                        <div class="stat-label">Projects</div>
-                    </div>
-                    <div class="stat">
+                    <div class="stat satisfaction-stat">
                         <div class="stat-number" data-target="100">0</div>
                         <div class="stat-label">Satisfaction</div>
                     </div>
@@ -99,7 +91,7 @@
                 <div class="github-activity">
                     <div class="activity-header">
                         <span>📊</span>
-                        <span>365 days of commits</span>
+                        <span>Version Control Proficient</span>
                     </div>
                     <div class="activity-grid" id="activityGrid"></div>
                 </div>
@@ -145,54 +137,59 @@
                     <span class="tech-tag">Tailwind</span>
                     <span class="tech-tag">CSS3</span>
                     <span class="tech-tag">SCSS</span>
+                    <span class="tech-tag">HTML</span>
                 </div>
             </div>
 
             <div class="skill-card">
-                <span class="skill-icon">⚡</span>
-                <h3>Performance</h3>
-                <p>Optimizing applications for speed, accessibility, and scalability</p>
+                <span class="skill-icon">💻</span>
+                <h3>Programming</h3>
+                <p>Core programming languages and development environments</p>
                 <div class="tech-tags">
-                    <span class="tech-tag">Webpack</span>
-                    <span class="tech-tag">Vite</span>
-                    <span class="tech-tag">PWA</span>
-                    <span class="tech-tag">SEO</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">SQL</span>
+                    <span class="tech-tag">Pine Script</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <span class="skill-icon">🛠️</span>
+                <h3>Dev Environments</h3>
+                <p>Modern development tools and integrated environments</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Cursor</span>
+                    <span class="tech-tag">PyCharm</span>
+                    <span class="tech-tag">VS Code</span>
+                    <span class="tech-tag">Google Colab</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <span class="skill-icon">🎬</span>
+                <h3>Creative & Visual Tools</h3>
+                <p>Professional tools for content creation and visual design</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">DaVinci Resolve</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">PowerPoint</span>
+                    <span class="tech-tag">Prezi</span>
+                    <span class="tech-tag">Canva</span>
+                    <span class="tech-tag">Microsoft Suite</span>
+                    <span class="tech-tag">Google Workspace</span>
                 </div>
             </div>
 
             <div class="skill-card">
                 <span class="skill-icon">🔧</span>
-                <h3>Development Tools</h3>
-                <p>Leveraging modern tooling for efficient development workflows</p>
+                <h3>Development Workflow & Quality Assurance</h3>
+                <p>Professional development practices ensuring code quality, collaboration, and seamless user experiences across all devices</p>
                 <div class="tech-tags">
                     <span class="tech-tag">Git</span>
-                    <span class="tech-tag">Docker</span>
-                    <span class="tech-tag">CI/CD</span>
-                    <span class="tech-tag">Testing</span>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <span class="skill-icon">🗄️</span>
-                <h3>Backend Integration</h3>
-                <p>Connecting frontends with APIs and backend services seamlessly</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">REST</span>
-                    <span class="tech-tag">GraphQL</span>
-                    <span class="tech-tag">Node.js</span>
-                    <span class="tech-tag">Firebase</span>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <span class="skill-icon">📱</span>
-                <h3>Responsive Design</h3>
-                <p>Ensuring flawless experiences across all devices and screen sizes</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Mobile-First</span>
-                    <span class="tech-tag">Flexbox</span>
-                    <span class="tech-tag">Grid</span>
-                    <span class="tech-tag">A11y</span>
+                    <span class="tech-tag">GitHub</span>
+                    <span class="tech-tag">Responsive Design</span>
+                    <span class="tech-tag">CSS Grid</span>
+                    <span class="tech-tag">Debugging</span>
+                    <span class="tech-tag">Cross-Browser Testing</span>
                 </div>
             </div>
         </div>
@@ -264,47 +261,88 @@
         <p class="section-subtitle">A fully playable platformer game built with vanilla JavaScript and Canvas API</p>
 
         <div class="playground-container">
-            <div class="playground-header">
-                <div class="playground-tabs">
-                    <button class="playground-tab active" data-tab="game">🎮 Jump</button>
-                </div>
-            </div>
-
-            <!-- Game Tab -->
-            <div class="playground-content active" id="game-content">
-                <div class="game-container">
+            <!-- Game Canvas Section -->
+            <div class="game-showcase">
+                <div class="game-canvas-wrapper">
                     <canvas id="gameCanvas" width="400" height="600"></canvas>
-                    <div class="game-info">
-                        <p><strong>Controls:</strong> Arrow Keys / A-D to move | Space / W / Up Arrow to jump | R to restart</p>
-                    </div>
-                    <div class="game-controls">
-                        <span class="control-key">← → Move</span>
-                        <span class="control-key">Space Jump</span>
-                        <span class="control-key">R Restart</span>
-                    </div>
+                    <div class="canvas-glow"></div>
                 </div>
             </div>
 
+            <!-- Game Info Section -->
+            <div class="game-info-grid">
+                <!-- Game Instructions -->
+                <div class="info-card instructions-card">
+                    <div class="card-header">
+                        <h3>How to Play</h3>
+                        <div class="card-icon">❓</div>
+                    </div>
+                    <div class="instructions-content">
+                        <div class="instruction-item">
+                            <span class="instruction-key">← →</span>
+                            <span class="instruction-desc">Move left/right</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-key">Space</span>
+                            <span class="instruction-desc">Jump</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-key">R</span>
+                            <span class="instruction-desc">Restart game</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-key">Goal</span>
+                            <span class="instruction-desc">Reach higher levels!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Statistics -->
+                <div class="info-card stats-card">
+                    <div class="card-header">
+                        <h3>Game Statistics</h3>
+                        <div class="card-icon">📊</div>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stat-item">
+                            <span class="stat-label">High Score</span>
+                            <span class="stat-value" id="highScoreDisplay">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Levels Completed</span>
+                            <span class="stat-value" id="levelsCompleted">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Games Played</span>
+                            <span class="stat-value" id="gamesPlayed">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Current Streak</span>
+                            <span class="stat-value" id="currentStreak">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="contact" class="contact-section">
         <div class="contact-container">
             <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">Let's build something amazing together</p>
+            <p class="section-subtitle">Let's build something great together</p>
 
             <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" required placeholder="Your name">
+                    <input type="text" id="name" name="name" required placeholder="Your name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" required placeholder="your@email.com">
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" required placeholder="Tell me about your project..."></textarea>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                 <div class="form-success" id="formSuccess">

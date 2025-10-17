@@ -1,3 +1,52 @@
+// ========== GAME SHOWCASE INTERACTIVE FEATURES ==========
+
+// Game Statistics
+let gameStats = {
+    highScore: 0,
+    levelsCompleted: 0,
+    gamesPlayed: 0,
+    currentStreak: 0
+};
+
+// Load stats from localStorage
+function loadGameStats() {
+    const saved = localStorage.getItem('jumpGameStats');
+    if (saved) {
+        gameStats = { ...gameStats, ...JSON.parse(saved) };
+    }
+    updateStatsDisplay();
+}
+
+// Save stats to localStorage
+function saveGameStats() {
+    localStorage.setItem('jumpGameStats', JSON.stringify(gameStats));
+}
+
+// Update statistics display
+function updateStatsDisplay() {
+    const elements = {
+        highScoreDisplay: gameStats.highScore,
+        levelsCompleted: gameStats.levelsCompleted,
+        gamesPlayed: gameStats.gamesPlayed,
+        currentStreak: gameStats.currentStreak
+    };
+    
+    Object.entries(elements).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value;
+        }
+    });
+    
+}
+
+
+
+// Initialize all interactive features
+function initGameShowcase() {
+    loadGameStats();
+}
+
 // ========== ICY TOWER GAME ==========
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -129,6 +178,12 @@ function resetGame() {
     levelMultiplier = 1;
     gameState = 'playing';
     initPlatforms();
+    
+    // Track game start
+    gameStats.gamesPlayed++;
+    gameStats.currentStreak++;
+    saveGameStats();
+    updateStatsDisplay();
 }
 
 // Check level completion
@@ -148,6 +203,11 @@ function advanceLevel() {
         levelMultiplier = levelConfigs[currentLevel].multiplier;
         gameState = 'levelTransition';
         
+        // Track level completion
+        gameStats.levelsCompleted = Math.max(gameStats.levelsCompleted, currentLevel - 1);
+        saveGameStats();
+        updateStatsDisplay();
+        
         // Reset platforms for new level
         initPlatforms();
         
@@ -158,6 +218,9 @@ function advanceLevel() {
     } else {
         // Game completed
         gameState = 'gameComplete';
+        gameStats.levelsCompleted = Math.max(gameStats.levelsCompleted, currentLevel);
+        saveGameStats();
+        updateStatsDisplay();
     }
 }
 
@@ -249,6 +312,14 @@ function update() {
         if (score > highScore) {
             highScore = score;
         }
+        
+        // Track high score and reset streak
+        if (score > gameStats.highScore) {
+            gameStats.highScore = score;
+        }
+        gameStats.currentStreak = 0;
+        saveGameStats();
+        updateStatsDisplay();
     }
 
     // Generate new platforms
@@ -472,9 +543,16 @@ document.addEventListener('keydown', (e) => {
         resetGame();
     }
     
-    // Prevent scrolling
+    // Prevent scrolling ONLY when not in input fields
     if (['ArrowUp', 'ArrowDown', ' '].includes(e.key)) {
-        e.preventDefault();
+        // Check if user is typing in an input/textarea
+        const activeElement = document.activeElement;
+        const isTyping = activeElement.tagName === 'INPUT' || 
+                         activeElement.tagName === 'TEXTAREA';
+        
+        if (!isTyping) {
+            e.preventDefault();
+        }
     }
 });
 
@@ -485,6 +563,11 @@ document.addEventListener('keyup', (e) => {
 // Initialize and start game loop
 initPlatforms();
 gameLoop();
+
+// Initialize game showcase features when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initGameShowcase();
+});
 
 // ========== END ICY TOWER GAME ==========
 
@@ -791,6 +874,21 @@ const formSuccess = document.getElementById('formSuccess');
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    // Get form data
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    const mailtoLink = `mailto:katiehunt95@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Open user's email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
     formSuccess.style.display = 'block';
     contactForm.reset();
     
