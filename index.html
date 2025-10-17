@@ -1,63 +1,376 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Katie Hunt - Frontend Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katie Hunt - Frontend Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <canvas id="particleCanvas"></canvas>
-  <div class="modal-backdrop" id="modalBackdrop"></div>
+    <canvas id="particleCanvas"></canvas>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
 
-  <div class="theme-toggle" id="themeToggle">
-      <span class="theme-icon">🌙</span>
-  </div>
+    <div class="theme-toggle" id="themeToggle">
+        <span class="theme-icon">🌙</span>
+    </div>
 
-  <div class="perf-monitor">
-      <span class="fps">FPS: <span id="fps">60</span></span> | 
-      Load: <span id="loadTime">0</span>ms
-  </div>
+    <div class="perf-monitor">
+        <span class="fps">FPS: <span id="fps">60</span></span> | 
+        Load: <span id="loadTime">0</span>ms
+    </div>
 
-  <div class="easter-egg-modal" id="easterEgg">
-      <h2>🎉 You Found It!</h2>
-      <p style="margin: 1.5rem 0; color: var(--text-secondary);">
-          Congratulations! You discovered the secret Konami code.<br>
-          <span style="color: var(--accent-primary); font-family: 'JetBrains Mono', monospace;">
-              ↑ ↑ ↓ ↓ ← → ← → B A
-          </span>
-      </p>
-      <button class="btn btn-primary" onclick="closeEasterEgg()">Awesome!</button>
-  </div>
+    <div class="easter-egg-modal" id="easterEgg">
+        <h2>🎉 You Found It!</h2>
+        <p style="margin: 1.5rem 0; color: var(--text-secondary);">
+            Congratulations! You discovered the secret Konami code.<br>
+            <span style="color: var(--accent-primary); font-family: 'JetBrains Mono', monospace;">
+                ↑ ↑ ↓ ↓ ← → ← → B A
+            </span>
+        </p>
+        <button class="btn btn-primary" onclick="closeEasterEgg()">Awesome!</button>
+    </div>
 
-  <nav id="navbar">
-      <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Katie Hunt</div>
-      <ul class="nav-links">
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#playground">Playground</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-      </ul>
-  </nav>
+    <nav id="navbar">
+        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Katie Hunt</div>
+        <ul class="nav-links">
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#playground">Playground</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-  <!-- (body content trimmed for brevity - identical to original elite_portfolio.html) -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Frontend Engineer & UI Architect</h1>
+                <p class="subtitle">Building exceptional digital experiences</p>
+                <p class="description">I specialize in crafting high-performance, accessible web applications with modern frameworks and cutting-edge design systems. Turning complex problems into elegant, user-centered solutions.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number" data-target="5">0</div>
+                        <div class="stat-label">Years</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                </div>
 
-  <footer>
-      <div class="footer-content">
-          <div class="footer-text">© 2025 Katie Hunt — Designed & Built with Excellence</div>
-          <div class="tech-stack">
-              Built with <span>HTML5</span>, <span>CSS3</span>, <span>Canvas API</span> & <span>Vanilla JS</span>
-          </div>
-          <div class="social-links">
-              <a href="#" class="social-link" title="GitHub">G</a>
-              <a href="#" class="social-link" title="LinkedIn">L</a>
-              <a href="#" class="social-link" title="Twitter">T</a>
-              <a href="mailto:katiehunt95@gmail.com" class="social-link" title="Email">@</a>
-          </div>
-      </div>
-  </footer>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
 
-  <script src="app.js"></script>
+            <div>
+                <div class="terminal-card">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot"></div>
+                            <div class="terminal-dot"></div>
+                            <div class="terminal-dot"></div>
+                        </div>
+                        <div class="terminal-title">~/portfolio/about.js</div>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="terminal-line"><span class="code-keyword">const</span> <span class="code-function">engineer</span> = {</div>
+                        <div class="terminal-line">  name: <span class="code-string">'Katie Hunt'</span>,</div>
+                        <div class="terminal-line">  role: <span class="code-string">'Frontend Engineer'</span>,</div>
+                        <div class="terminal-line">  stack: [<span class="code-string">'React'</span>, <span class="code-string">'TypeScript'</span>, <span class="code-string">'Next.js'</span>],</div>
+                        <div class="terminal-line">  experience: <span class="code-number">5</span>, <span class="code-comment">// years</span></div>
+                        <div class="terminal-line">  passion: <span class="code-string">'Building the future'</span><span class="cursor-blink"></span></div>
+                        <div class="terminal-line">};</div>
+                    </div>
+                    <div class="terminal-input">
+                        <span class="terminal-prompt">$</span>
+                        <input type="text" class="terminal-input-field" placeholder="Try: help, skills, contact" id="terminalInput">
+                    </div>
+                </div>
+
+                <div class="github-activity">
+                    <div class="activity-header">
+                        <span>📊</span>
+                        <span>365 days of commits</span>
+                    </div>
+                    <div class="activity-grid" id="activityGrid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills-section">
+        <h2 class="section-title">Technical Expertise</h2>
+        <p class="section-subtitle">Modern tools and frameworks I use to build exceptional products</p>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <span class="skill-icon">⚛️</span>
+                <h3>Frontend Development</h3>
+                <p>Building responsive, performant web applications with modern JavaScript frameworks</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Next.js</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">Vue.js</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <span class="skill-icon">🎨</span>
+                <h3>UI/UX Design</h3>
+                <p>Creating intuitive interfaces with attention to detail and user experience</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Figma</span>
+                    <span class="tech-tag">Tailwind</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">SCSS</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <span class="skill-icon">⚡</span>
+                <h3>Performance</h3>
+                <p>Optimizing applications for speed, accessibility, and scalability</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Webpack</span>
+                    <span class="tech-tag">Vite</span>
+                    <span class="tech-tag">PWA</span>
+                    <span class="tech-tag">SEO</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <span class="skill-icon">🔧</span>
+                <h3>Development Tools</h3>
+                <p>Leveraging modern tooling for efficient development workflows</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Git</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">CI/CD</span>
+                    <span class="tech-tag">Testing</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <span class="skill-icon">🗄️</span>
+                <h3>Backend Integration</h3>
+                <p>Connecting frontends with APIs and backend services seamlessly</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">REST</span>
+                    <span class="tech-tag">GraphQL</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">Firebase</span>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <span class="skill-icon">📱</span>
+                <h3>Responsive Design</h3>
+                <p>Ensuring flawless experiences across all devices and screen sizes</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Mobile-First</span>
+                    <span class="tech-tag">Flexbox</span>
+                    <span class="tech-tag">Grid</span>
+                    <span class="tech-tag">A11y</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="playground" class="playground-section">
+        <h2 class="section-title">Code Playground</h2>
+        <p class="section-subtitle">Interactive examples of my work - try the game or run the code!</p>
+
+        <div class="playground-container">
+            <div class="playground-header">
+                <div class="playground-tabs">
+                    <button class="playground-tab active" data-tab="game">🎮 Icy Tower Game</button>
+                    <button class="playground-tab" data-tab="javascript">JavaScript</button>
+                    <button class="playground-tab" data-tab="react">React</button>
+                    <button class="playground-tab" data-tab="css">CSS</button>
+                </div>
+                <button class="run-button" id="runCodeBtn" style="display: none;">▶ Run Code</button>
+            </div>
+
+            <!-- Game Tab -->
+            <div class="playground-content active" id="game-content">
+                <div class="game-container">
+                    <canvas id="gameCanvas" width="400" height="600"></canvas>
+                    <div class="game-info">
+                        <p><strong>Controls:</strong> Arrow Keys / A-D to move | Space / W / Up Arrow to jump | R to restart</p>
+                    </div>
+                    <div class="game-controls">
+                        <span class="control-key">← → Move</span>
+                        <span class="control-key">Space Jump</span>
+                        <span class="control-key">R Restart</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript Tab -->
+            <div class="playground-content" id="javascript-content">
+                <div class="playground-editor"><span class="code-comment">// Fibonacci sequence generator</span>
+<span class="code-keyword">function</span> <span class="code-function">fibonacci</span>(<span class="code-keyword">n</span>) {
+  <span class="code-keyword">if</span> (n <= <span class="code-number">1</span>) <span class="code-keyword">return</span> n;
+  <span class="code-keyword">return</span> <span class="code-function">fibonacci</span>(n - <span class="code-number">1</span>) + <span class="code-function">fibonacci</span>(n - <span class="code-number">2</span>);
+}
+
+<span class="code-comment">// Generate first 10 Fibonacci numbers</span>
+<span class="code-keyword">const</span> sequence = Array.<span class="code-function">from</span>({ length: <span class="code-number">10</span> }, (_, i) => <span class="code-function">fibonacci</span>(i));
+console.<span class="code-function">log</span>(<span class="code-string">'Fibonacci:'</span>, sequence);</div>
+            </div>
+
+            <!-- React Tab -->
+            <div class="playground-content" id="react-content">
+                <div class="playground-editor"><span class="code-comment">// React Counter Component</span>
+<span class="code-keyword">import</span> { useState } <span class="code-keyword">from</span> <span class="code-string">'react'</span>;
+
+<span class="code-keyword">function</span> <span class="code-function">Counter</span>() {
+  <span class="code-keyword">const</span> [count, setCount] = <span class="code-function">useState</span>(<span class="code-number">0</span>);
+
+  <span class="code-keyword">return</span> (
+    &lt;div className=<span class="code-string">"counter"</span>&gt;
+      &lt;h2&gt;Count: {count}&lt;/h2&gt;
+      &lt;button onClick={() => <span class="code-function">setCount</span>(count + <span class="code-number">1</span>)}&gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</div>
+            </div>
+
+            <!-- CSS Tab -->
+            <div class="playground-content" id="css-content">
+                <div class="playground-editor"><span class="code-comment">/* Modern Button with Glassmorphism */</span>
+<span class="code-keyword">.glass-button</span> {
+  <span class="code-function">background</span>: <span class="code-string">rgba(255, 255, 255, 0.1)</span>;
+  <span class="code-function">backdrop-filter</span>: <span class="code-string">blur(10px)</span>;
+  <span class="code-function">border</span>: <span class="code-string">1px solid rgba(255, 255, 255, 0.2)</span>;
+  <span class="code-function">border-radius</span>: <span class="code-string">12px</span>;
+  <span class="code-function">padding</span>: <span class="code-string">1rem 2rem</span>;
+  <span class="code-function">color</span>: <span class="code-string">white</span>;
+  <span class="code-function">cursor</span>: <span class="code-string">pointer</span>;
+  <span class="code-function">transition</span>: <span class="code-string">all 0.3s ease</span>;
+}
+
+<span class="code-keyword">.glass-button:hover</span> {
+  <span class="code-function">background</span>: <span class="code-string">rgba(255, 255, 255, 0.2)</span>;
+  <span class="code-function">transform</span>: <span class="code-function">translateY</span>(<span class="code-string">-2px</span>);
+  <span class="code-function">box-shadow</span>: <span class="code-string">0 10px 30px rgba(0, 0, 0, 0.3)</span>;
+}</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A selection of my recent work showcasing technical excellence</p>
+
+        <div class="projects-grid">
+            <article class="project-card">
+                <div class="project-image"></div>
+                <div class="project-content">
+                    <h3>E-Commerce Platform</h3>
+                    <p>A full-featured e-commerce solution built with Next.js and Stripe integration. Includes real-time inventory management, advanced search functionality, and a seamless checkout experience.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Live Demo →</a>
+                        <a href="#" class="project-link">View Code →</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Stripe</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="project-image"></div>
+                <div class="project-content">
+                    <h3>Analytics Dashboard</h3>
+                    <p>Real-time analytics platform with interactive data visualizations, custom reporting, and performance metrics. Handles millions of data points with smooth animations.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Live Demo →</a>
+                        <a href="#" class="project-link">View Code →</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">D3.js</span>
+                        <span class="tech-tag">WebSocket</span>
+                        <span class="tech-tag">Redis</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="project-image"></div>
+                <div class="project-content">
+                    <h3>Design System</h3>
+                    <p>Comprehensive component library with 50+ reusable components, complete documentation, and accessibility standards. Used across multiple production applications.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Live Demo →</a>
+                        <a href="#" class="project-link">View Code →</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Storybook</span>
+                        <span class="tech-tag">Styled-Comp</span>
+                        <span class="tech-tag">Jest</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Let's build something amazing together</p>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" required placeholder="Tell me about your project..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                <div class="form-success" id="formSuccess">
+                    ✓ Message sent successfully! I'll get back to you soon.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-text">© 2025 Katie Hunt — Designed & Built with Excellence</div>
+            <div class="tech-stack">
+                Built with <span>HTML5</span>, <span>CSS3</span>, <span>Canvas API</span> & <span>Vanilla JS</span>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link" title="GitHub">G</a>
+                <a href="#" class="social-link" title="LinkedIn">L</a>
+                <a href="#" class="social-link" title="Twitter">T</a>
+                <a href="mailto:katiehunt95@gmail.com" class="social-link" title="Email">@</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>
