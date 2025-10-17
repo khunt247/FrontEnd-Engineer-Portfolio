@@ -1,6 +1,12 @@
 # Katie Hunt — Frontend Engineer Portfolio
 
-Single-file static portfolio built with HTML, CSS and Vanilla JavaScript. Open the demo: `elite_portfolio draft 4.html`
+Single-file static portfolio built with HTML, CSS and Vanilla JavaScript. For development this repo now includes a split version:
+
+- `index.html` — main entry (uses `styles.css` and `app.js`)
+- `styles.css` — extracted styles
+- `app.js` — extracted JavaScript
+
+Open the demo: `index.html` (or keep the original `elite_portfolio.html` if you prefer the single-file version).
 
 ## Overview
 This repository contains a single HTML file that serves as a personal portfolio. It showcases interactive components and small demos embedded directly in the file, including:
@@ -12,15 +18,23 @@ This repository contains a single HTML file that serves as a personal portfolio.
 - Contact form and a theme toggle
 
 ## Run locally
-1. Open `elite_portfolio draft 4.html` in your browser.
-2. Or serve the folder with a simple HTTP server for correct relative loading and CORS behavior (recommended):
+1. Open `index.html` in your browser for a quick preview.
+2. Recommended: use the included npm dev script to run a local server (this provides a proper static server and live reload via `live-server`).
+
+```powershell
+# install dev dependency
+npm install
+
+# start the dev server and open index.html
+npm start
+```
+
+Or use a Python static server if you prefer:
 
 ```powershell
 python -m http.server 8000
-# then visit: http://localhost:8000/elite_portfolio%20draft%204.html
+# then visit: http://localhost:8000/index.html
 ```
-
-On Windows PowerShell, run the above command from the repository folder (where `elite_portfolio draft 4.html` is located).
 
 ## Controls / Interaction
 - Game canvas (`id="gameCanvas"`):

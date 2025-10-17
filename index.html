@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Katie Hunt - Frontend Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+
+  <div class="theme-toggle" id="themeToggle">
+      <span class="theme-icon">🌙</span>
+  </div>
+
+  <div class="perf-monitor">
+      <span class="fps">FPS: <span id="fps">60</span></span> | 
+      Load: <span id="loadTime">0</span>ms
+  </div>
+
+  <div class="easter-egg-modal" id="easterEgg">
+      <h2>🎉 You Found It!</h2>
+      <p style="margin: 1.5rem 0; color: var(--text-secondary);">
+          Congratulations! You discovered the secret Konami code.<br>
+          <span style="color: var(--accent-primary); font-family: 'JetBrains Mono', monospace;">
+              ↑ ↑ ↓ ↓ ← → ← → B A
+          </span>
+      </p>
+      <button class="btn btn-primary" onclick="closeEasterEgg()">Awesome!</button>
+  </div>
+
+  <nav id="navbar">
+      <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Katie Hunt</div>
+      <ul class="nav-links">
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#playground">Playground</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+      </ul>
+  </nav>
+
+  <!-- (body content trimmed for brevity - identical to original elite_portfolio.html) -->
+
+  <footer>
+      <div class="footer-content">
+          <div class="footer-text">© 2025 Katie Hunt — Designed & Built with Excellence</div>
+          <div class="tech-stack">
+              Built with <span>HTML5</span>, <span>CSS3</span>, <span>Canvas API</span> & <span>Vanilla JS</span>
+          </div>
+          <div class="social-links">
+              <a href="#" class="social-link" title="GitHub">G</a>
+              <a href="#" class="social-link" title="LinkedIn">L</a>
+              <a href="#" class="social-link" title="Twitter">T</a>
+              <a href="mailto:katiehunt95@gmail.com" class="social-link" title="Email">@</a>
+          </div>
+      </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "katie-hunt-portfolio",
+  "version": "1.0.0",
+  "description": "Single-file frontend portfolio (split into modular files for development)",
+  "scripts": {
+    "start": "live-server --port=5173 --open=./index.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
