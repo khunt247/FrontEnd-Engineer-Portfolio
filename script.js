@@ -3,12 +3,19 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Game State
-let gameState = 'start'; // start, playing, gameOver
+let gameState = 'start'; // start, playing, gameOver, levelComplete, levelTransition
 let score = 0;
 let highScore = 0;
 let combo = 0;
 let floor = 0;
 let cameraY = 0;
+
+// Level System
+let currentLevel = 1;
+let maxLevel = 3;
+let levelProgress = 0;
+let levelCompleteThreshold = 1000;
+let levelMultiplier = 1;
 
 // Player
 const player = {
@@ -33,6 +40,37 @@ let lastPlatformY = canvas.height - 50;
 // Controls
 const keys = {};
 
+// Level Configurations
+const levelConfigs = {
+    1: {
+        name: "The Beginning",
+        minGap: 60,
+        maxGap: 100,
+        minWidth: 80,
+        maxWidth: 200,
+        color: '#7b2ff7',
+        multiplier: 1
+    },
+    2: {
+        name: "Rising Challenge", 
+        minGap: 80,
+        maxGap: 120,
+        minWidth: 60,
+        maxWidth: 150,
+        color: '#ff006e',
+        multiplier: 1.5
+    },
+    3: {
+        name: "Expert Heights",
+        minGap: 100,
+        maxGap: 150,
+        minWidth: 50,
+        maxWidth: 120,
+        color: '#00d4ff',
+        multiplier: 2
+    }
+};
+
 // Initialize platforms
 function initPlatforms() {
     platforms = [];
@@ -55,16 +93,14 @@ function initPlatforms() {
 
 // Generate new platform
 function generatePlatform() {
-    const minGap = 60 + Math.floor(score / 500) * 10; // Increase difficulty
-    const maxGap = 100 + Math.floor(score / 500) * 15;
+    const config = levelConfigs[currentLevel];
+    const minGap = config.minGap + Math.floor(score / 500) * 5;
+    const maxGap = config.maxGap + Math.floor(score / 500) * 8;
     const gap = Math.random() * (maxGap - minGap) + minGap;
     
     lastPlatformY -= gap;
     
-    const minWidth = 80;
-    const maxWidth = 200;
-    const width = Math.random() * (maxWidth - minWidth) + minWidth;
-    
+    const width = Math.random() * (config.maxWidth - config.minWidth) + config.minWidth;
     const x = Math.random() * (canvas.width - width);
     
     platforms.push({
@@ -72,7 +108,7 @@ function generatePlatform() {
         y: lastPlatformY,
         width: width,
         height: platformHeight,
-        color: '#7b2ff7'
+        color: config.color
     });
 }
 
@@ -87,8 +123,42 @@ function resetGame() {
     combo = 0;
     floor = 0;
     cameraY = 0;
+    currentLevel = 1;
+    levelProgress = 0;
+    levelCompleteThreshold = 1000;
+    levelMultiplier = 1;
     gameState = 'playing';
     initPlatforms();
+}
+
+// Check level completion
+function checkLevelComplete() {
+    if (score >= levelCompleteThreshold && currentLevel < maxLevel) {
+        gameState = 'levelComplete';
+        levelProgress = 100;
+    }
+}
+
+// Advance to next level
+function advanceLevel() {
+    if (currentLevel < maxLevel) {
+        currentLevel++;
+        levelProgress = 0;
+        levelCompleteThreshold = currentLevel * 1000;
+        levelMultiplier = levelConfigs[currentLevel].multiplier;
+        gameState = 'levelTransition';
+        
+        // Reset platforms for new level
+        initPlatforms();
+        
+        // Brief transition before continuing
+        setTimeout(() => {
+            gameState = 'playing';
+        }, 2000);
+    } else {
+        // Game completed
+        gameState = 'gameComplete';
+    }
 }
 
 // Update game
@@ -137,8 +207,9 @@ function update() {
         const newFloor = Math.floor(-cameraY / 50);
         if (newFloor > floor) {
             const floorsDiff = newFloor - floor;
-            score += floorsDiff * 10 * (combo + 1);
+            score += floorsDiff * 10 * (combo + 1) * levelMultiplier;
             floor = newFloor;
+            levelProgress = Math.min((score / levelCompleteThreshold) * 100, 100);
         }
     }
 
@@ -155,10 +226,10 @@ function update() {
             player.vy = 0;
             player.onGround = true;
             
-            // Combo system
+            // Combo system with level multiplier
             if (platform !== platforms[0]) { // Not the ground
                 combo++;
-                score += combo * 5;
+                score += combo * 5 * levelMultiplier;
             }
         }
     });
@@ -169,6 +240,9 @@ function update() {
         combo = 0;
     }
 
+    // Check level completion
+    checkLevelComplete();
+    
     // Game over if fell off screen
     if (player.y > canvas.height + 100) {
         gameState = 'gameOver';
@@ -212,6 +286,69 @@ function draw() {
             ctx.fillStyle = '#00d4ff';
             ctx.fillText(`High Score: ${highScore}`, canvas.width / 2, 450);
         }
+        return;
+    }
+
+    // Draw level complete screen
+    if (gameState === 'levelComplete') {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#27c93f';
+        ctx.font = 'bold 48px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText('LEVEL COMPLETE!', canvas.width / 2, 200);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '24px Inter';
+        ctx.fillText(`Level ${currentLevel} Complete`, canvas.width / 2, 270);
+        ctx.fillText(`Score: ${score}`, canvas.width / 2, 310);
+        
+        ctx.fillStyle = '#a0aec0';
+        ctx.font = '18px Inter';
+        ctx.fillText('Press SPACE to Continue', canvas.width / 2, 380);
+        return;
+    }
+
+    // Draw level transition screen
+    if (gameState === 'levelTransition') {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const config = levelConfigs[currentLevel];
+        ctx.fillStyle = config.color;
+        ctx.font = 'bold 36px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText(`Level ${currentLevel}`, canvas.width / 2, 200);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '24px Inter';
+        ctx.fillText(config.name, canvas.width / 2, 250);
+        
+        ctx.fillStyle = '#a0aec0';
+        ctx.font = '18px Inter';
+        ctx.fillText('Get Ready...', canvas.width / 2, 300);
+        return;
+    }
+
+    // Draw game complete screen
+    if (gameState === 'gameComplete') {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#00d4ff';
+        ctx.font = 'bold 48px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME COMPLETE!', canvas.width / 2, 200);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '24px Inter';
+        ctx.fillText(`Final Score: ${score}`, canvas.width / 2, 270);
+        ctx.fillText('Congratulations!', canvas.width / 2, 310);
+        
+        ctx.fillStyle = '#a0aec0';
+        ctx.font = '18px Inter';
+        ctx.fillText('Press R to Play Again', canvas.width / 2, 380);
         return;
     }
 
@@ -274,10 +411,34 @@ function draw() {
         ctx.fillText(`Combo x${combo}!`, 20, 105);
     }
     
+    // Level UI
+    const config = levelConfigs[currentLevel];
+    ctx.fillStyle = config.color;
+    ctx.font = 'bold 20px Inter';
+    ctx.textAlign = 'right';
+    ctx.fillText(`Level ${currentLevel}: ${config.name}`, canvas.width - 20, 40);
+    
+    // Level progress bar
+    const progressWidth = 200;
+    const progressHeight = 8;
+    const progressX = canvas.width - progressWidth - 20;
+    const progressY = 60;
+    
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.fillRect(progressX, progressY, progressWidth, progressHeight);
+    
+    ctx.fillStyle = config.color;
+    ctx.fillRect(progressX, progressY, (levelProgress / 100) * progressWidth, progressHeight);
+    
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px Inter';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${Math.round(levelProgress)}%`, canvas.width - 20, progressY + 20);
+    
     ctx.fillStyle = '#a0aec0';
     ctx.font = '16px Inter';
     ctx.textAlign = 'right';
-    ctx.fillText(`High: ${highScore}`, canvas.width - 20, 40);
+    ctx.fillText(`High: ${highScore}`, canvas.width - 20, 100);
 }
 
 // Game loop
@@ -296,8 +457,18 @@ document.addEventListener('keydown', (e) => {
         resetGame();
     }
     
+    // Level complete - continue to next level
+    if (gameState === 'levelComplete' && e.key === ' ') {
+        advanceLevel();
+    }
+    
     // Restart game
     if (gameState === 'gameOver' && (e.key === 'r' || e.key === 'R')) {
+        resetGame();
+    }
+    
+    // Game complete - restart
+    if (gameState === 'gameComplete' && (e.key === 'r' || e.key === 'R')) {
         resetGame();
     }
     
