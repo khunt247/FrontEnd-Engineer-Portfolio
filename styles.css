@@ -526,6 +526,7 @@ nav {
     font-weight: 800;
     line-height: 1;
     margin-bottom: 0.5rem;
+    text-align: center;
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -539,10 +540,11 @@ nav {
     letter-spacing: 0.1em;
     color: var(--text-primary);
     opacity: 0.9;
+    text-align: center;
 }
 
 .stat {
-    text-align: left;
+    text-align: center;
     position: relative;
     padding: var(--space-4);
     border-radius: var(--radius-lg);
