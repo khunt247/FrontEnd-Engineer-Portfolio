@@ -1130,8 +1130,28 @@ const projectScreenshots = {
         currentIndex: 0
     },
     project3: {
-        images: ['images/project3.png'],
-        captions: ['Project 3 Screenshot'],
+        images: [
+            'images/project3-1.png',
+            'images/project3-2.png',
+            'images/project3-3.png',
+            'images/project3-4.png',
+            'images/project3-5.png',
+            'images/project3-6.png',
+            'images/project3-7.png',
+            'images/project3-8.png',
+            'images/project3-9.png'
+        ],
+        captions: [
+            'Lock Screen - Master Password Authentication with Secure Vault Access',
+            'Dashboard - Real-time KPI Analytics with Recent Snippets and Security Status',
+            'Code Snippet - Create and Edit Code with Syntax Highlighting and Metadata',
+            'Snippets Folder - Advanced Filtering by Language, Project, and Tags',
+            'Code Repository - File Tree Navigation with Syntax Highlighting',
+            'Settings - Security Configuration with Encryption and Auto-lock Options',
+            'Settings - Appearance Customization with Theme and Layout Preferences',
+            'Settings - Editor Preferences with Syntax Highlighting Configuration',
+            'Settings - Data Management with Backup, Export, and Retention Policies'
+        ],
         currentIndex: 0
     },
     project4: {
