@@ -305,7 +305,7 @@ function update() {
 
     // Check level completion
     checkLevelComplete();
-    
+
     // Game over if fell off screen
     if (player.y > canvas.height + 100) {
         gameState = 'gameOver';
@@ -551,7 +551,7 @@ document.addEventListener('keydown', (e) => {
                          activeElement.tagName === 'TEXTAREA';
         
         if (!isTyping) {
-            e.preventDefault();
+        e.preventDefault();
         }
     }
 });
@@ -568,6 +568,7 @@ gameLoop();
 document.addEventListener('DOMContentLoaded', () => {
     initGameShowcase();
     initEmailModal();
+    initProjects();
 });
 
 // ========== EMAIL MODAL ==========
@@ -1003,3 +1004,226 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ========== PROJECT CARDS FUNCTIONALITY ==========
+
+// Initialize project cards functionality
+function initProjectCards() {
+    // Handle expand/collapse for project details
+    const expandButtons = document.querySelectorAll('.expand-details-btn');
+    expandButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const projectCard = button.closest('.project-card');
+            const detailsSection = projectCard.querySelector('.project-details-expanded');
+            const isActive = detailsSection.classList.contains('active');
+            
+            // Close all other expanded sections
+            document.querySelectorAll('.project-details-expanded.active').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Toggle current section
+            if (!isActive) {
+                detailsSection.classList.add('active');
+                button.textContent = 'Hide Details';
+            } else {
+                detailsSection.classList.remove('active');
+                button.textContent = 'View Details';
+            }
+        });
+    });
+
+    // Handle screenshot modal
+    const screenshotButtons = document.querySelectorAll('.screenshot-btn');
+    screenshotButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const projectId = button.getAttribute('data-project');
+            openScreenshotModal(projectId);
+        });
+    });
+}
+
+// Project screenshots mapping
+const projectScreenshots = {
+    project1: {
+        images: [
+            'images/project1-1.png',
+            'images/project1-2.png',
+            'images/project1-3.png',
+            'images/project1-4.png',
+            'images/project1-5.png',
+            'images/project1-6.png',
+            'images/project1-7.png',
+            'images/project1-8.png',
+            'images/project1-9.png',
+            'images/project1-10.png',
+            'images/project1-11.png',
+            'images/project1-12.png',
+            'images/project1-13.png',
+            'images/project1-14.png',
+            'images/project1-15.png',
+            'images/project1-16.png',
+            'images/project1-17.png',
+            'images/project1-18.png',
+            'images/project1-19.png'
+        ],
+        captions: [
+            'Floating Dock - Interactive Dashboard Navigation',
+            'Floating Dock - Analytics View with Quick Access',
+            'Floating Dock - User Management Interface',
+            'Floating Dock - Data Management Controls',
+            'Floating Dock - Settings Configuration',
+            'Morphing Header - Adaptive Navigation Dashboard',
+            'Morphing Header - Performance Analytics',
+            'Morphing Header - User Access Control',
+            'Morphing Header - Data Infrastructure',
+            'Morphing Header - System Configuration',
+            'Radial Menu - Touch-Optimized Circular Navigation',
+            'Command Bar - Keyboard Shortcut Power User Interface',
+            'Slide-out Panel - Space-Efficient Side Navigation',
+            'Slide-out Panel - Extended Menu with File Management',
+            'Tabbed Interface - Multi-Section Dashboard',
+            'Tabbed Interface - Analytics Section View',
+            'Tabbed Interface - User Management Tab',
+            'Tabbed Interface - Data Management Tab',
+            'Tabbed Interface - Settings Configuration Tab'
+        ],
+        currentIndex: 0
+    },
+    project2: {
+        images: [
+            'images/project2-1.png',
+            'images/project2-2.png',
+            'images/project2-3.png',
+            'images/project2-4.png',
+            'images/project2-5.png',
+            'images/project2-6.png',
+            'images/project2-7.png',
+            'images/project2-8.png',
+            'images/project2-9.png',
+            'images/project2-10.png',
+            'images/project2-11.png',
+            'images/project2-12.png',
+            'images/project2-13.png',
+            'images/project2-14.png',
+            'images/project2-15.png'
+        ],
+        captions: [
+            'Home - Dark Theme with Animated Hero Section',
+            'Home - Light Theme with Clean Interface',
+            'Features - Dark Theme Showing Key Functionality',
+            'Features - Light Theme with Feature Cards',
+            'Benefits - Dark Theme with Visual Analytics',
+            'Benefits - Light Theme Highlighting Advantages',
+            'Contact - Dark Theme with Glassmorphism Form',
+            'Contact - Light Theme with Minimalist Design',
+            'Sign In - Authentication Interface',
+            'Sign In - Alternative Layout with Gradient Background',
+            'Sign In - Premium Design with Floating Elements',
+            'Sign In - Light Theme Authentication',
+            'Create New Habit - Dark Theme Habit Builder',
+            'Create New Habit - Light Theme Form Interface',
+            'My Habits - Dashboard with Progress Tracking'
+        ],
+        currentIndex: 0
+    },
+    project3: {
+        images: ['images/project3.png'],
+        captions: ['Project 3 Screenshot'],
+        currentIndex: 0
+    },
+    project4: {
+        images: ['images/project4.png'],
+        captions: ['Project 4 Screenshot'],
+        currentIndex: 0
+    }
+};
+
+let currentProject = null;
+
+// Open screenshot modal
+function openScreenshotModal(projectId) {
+    const modal = document.getElementById('screenshotModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    currentProject = projectId;
+    const projectData = projectScreenshots[projectId];
+    
+    if (projectData) {
+        projectData.currentIndex = 0;
+        modalImage.src = projectData.images[0];
+        modalImage.alt = projectData.captions[0];
+        modalCaption.textContent = projectData.captions[0];
+    }
+    
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Navigate screenshots
+function navigateScreenshot(direction) {
+    if (!currentProject) return;
+    
+    const projectData = projectScreenshots[currentProject];
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    if (direction === 'next') {
+        projectData.currentIndex = (projectData.currentIndex + 1) % projectData.images.length;
+    } else {
+        projectData.currentIndex = (projectData.currentIndex - 1 + projectData.images.length) % projectData.images.length;
+    }
+    
+    modalImage.src = projectData.images[projectData.currentIndex];
+    modalImage.alt = projectData.captions[projectData.currentIndex];
+    modalCaption.textContent = projectData.captions[projectData.currentIndex];
+}
+
+// Close screenshot modal
+function closeScreenshotModal() {
+    const modal = document.getElementById('screenshotModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Initialize screenshot modal event listeners
+function initScreenshotModal() {
+    const modal = document.getElementById('screenshotModal');
+    const closeButton = document.getElementById('screenshotModalClose');
+    const backdrop = document.getElementById('screenshotModalBackdrop');
+    const prevButton = document.getElementById('screenshotNavPrev');
+    const nextButton = document.getElementById('screenshotNavNext');
+    
+    // Close button
+    closeButton.addEventListener('click', closeScreenshotModal);
+    
+    // Backdrop click
+    backdrop.addEventListener('click', closeScreenshotModal);
+    
+    // Navigation buttons
+    prevButton.addEventListener('click', () => navigateScreenshot('prev'));
+    nextButton.addEventListener('click', () => navigateScreenshot('next'));
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (modal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeScreenshotModal();
+            } else if (e.key === 'ArrowLeft') {
+                navigateScreenshot('prev');
+            } else if (e.key === 'ArrowRight') {
+                navigateScreenshot('next');
+            }
+        }
+    });
+}
+
+// Initialize all project functionality
+function initProjects() {
+    initProjectCards();
+    initScreenshotModal();
+}
