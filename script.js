@@ -1155,8 +1155,16 @@ const projectScreenshots = {
         currentIndex: 0
     },
     project4: {
-        images: ['images/project4.png'],
-        captions: ['Project 4 Screenshot'],
+        images: [
+            'images/Project 4/Dashboard.png',
+            'images/Project 4/API Settings.png',
+            'images/Project 4/Logout.png'
+        ],
+        captions: [
+            'Dashboard - Real-Time Multi-Source Financial Data Visualization',
+            'API Settings - Secure API Key Management and Configuration',
+            'Logout - Secure Authentication Session Management'
+        ],
         currentIndex: 0
     }
 };
