@@ -589,18 +589,39 @@ function initEmailModal() {
         });
     });
 
-    // Close modal when clicking backdrop
-    emailModalBackdrop.addEventListener('click', closeEmailModal);
+    // Close modal when clicking close button - button needs stopPropagation only
+    if (emailModalClose) {
+        emailModalClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeEmailModal();
+        });
+    }
 
-    // Close modal when clicking close button
-    emailModalClose.addEventListener('click', closeEmailModal);
+    // Close modal when clicking backdrop element
+    if (emailModalBackdrop) {
+        emailModalBackdrop.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeEmailModal();
+        });
+    }
+
+    // Close modal when clicking the modal container itself (not content)
+    if (emailModal) {
+        emailModal.addEventListener('click', (e) => {
+            if (e.target === emailModal) {
+                closeEmailModal();
+            }
+        });
+    }
 
     // Close modal with Escape key
-    document.addEventListener('keydown', (e) => {
+    const handleEmailEscape = (e) => {
         if (e.key === 'Escape' && emailModal.classList.contains('active')) {
+            e.preventDefault();
             closeEmailModal();
         }
-    });
+    };
+    document.addEventListener('keydown', handleEmailEscape);
 
     // Copy email to clipboard
     copyEmailBtn.addEventListener('click', async () => {
@@ -682,7 +703,9 @@ class Particle {
     draw() {
         particleCtx.beginPath();
         particleCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        particleCtx.fillStyle = 'rgba(0, 212, 255, 0.3)';
+        // Theme-aware particle colors
+        const isDarkTheme = document.body.getAttribute('data-theme') === 'dark';
+        particleCtx.fillStyle = isDarkTheme ? 'rgba(0, 212, 255, 0.3)' : 'rgba(0, 150, 200, 0.5)';
         particleCtx.fill();
     }
 }
@@ -700,6 +723,8 @@ function animateParticles() {
     });
 
     // Connect nearby particles
+    // Theme-aware line colors
+    const isDarkTheme = document.body.getAttribute('data-theme') === 'dark';
     for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
             const dx = particles[i].x - particles[j].x;
@@ -710,8 +735,11 @@ function animateParticles() {
                 particleCtx.beginPath();
                 particleCtx.moveTo(particles[i].x, particles[i].y);
                 particleCtx.lineTo(particles[j].x, particles[j].y);
-                particleCtx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 120)})`;
-                particleCtx.lineWidth = 1;
+                const baseOpacity = isDarkTheme ? 0.2 : 0.35;
+                particleCtx.strokeStyle = isDarkTheme 
+                    ? `rgba(0, 212, 255, ${baseOpacity * (1 - distance / 120)})`
+                    : `rgba(0, 120, 180, ${baseOpacity * (1 - distance / 120)})`;
+                particleCtx.lineWidth = isDarkTheme ? 1 : 1.5;
                 particleCtx.stroke();
             }
         }
@@ -988,11 +1016,45 @@ document.addEventListener('keydown', (e) => {
 });
 
 function closeEasterEgg() {
-    document.getElementById('easterEgg').classList.remove('active');
-    document.getElementById('modalBackdrop').classList.remove('active');
+    const easterEgg = document.getElementById('easterEgg');
+    const backdrop = document.getElementById('modalBackdrop');
+    easterEgg.classList.remove('active');
+    backdrop.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
 }
 
-document.getElementById('modalBackdrop').addEventListener('click', closeEasterEgg);
+// Initialize Easter Egg Modal listeners
+function initEasterEggModal() {
+    const easterEgg = document.getElementById('easterEgg');
+    const easterEggBackdrop = document.getElementById('modalBackdrop');
+
+    if (!easterEgg || !easterEggBackdrop) return;
+
+    // Backdrop click
+    easterEggBackdrop.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeEasterEgg();
+    });
+
+    // Close modal when clicking outside the easter egg content
+    easterEgg.addEventListener('click', (e) => {
+        if (e.target === easterEgg) {
+            closeEasterEgg();
+        }
+    });
+
+    // Add Escape key handler for Easter Egg modal
+    const handleEasterEggEscape = (e) => {
+        if (e.key === 'Escape' && easterEgg.classList.contains('active')) {
+            e.preventDefault();
+            closeEasterEgg();
+        }
+    };
+    document.addEventListener('keydown', handleEasterEggEscape);
+}
+
+// Initialize Easter Egg modal
+initEasterEggModal();
 
 // Smooth Scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1216,6 +1278,7 @@ function closeScreenshotModal() {
     const modal = document.getElementById('screenshotModal');
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    currentProject = null; // Reset current project
 }
 
 // Initialize screenshot modal event listeners
@@ -1225,33 +1288,142 @@ function initScreenshotModal() {
     const backdrop = document.getElementById('screenshotModalBackdrop');
     const prevButton = document.getElementById('screenshotNavPrev');
     const nextButton = document.getElementById('screenshotNavNext');
-    
-    // Close button
-    closeButton.addEventListener('click', closeScreenshotModal);
-    
+    const modalContent = document.querySelector('.screenshot-modal-content');
+
+    // Add null checks before attaching listeners
+    if (!modal || !closeButton || !backdrop || !prevButton || !nextButton) {
+        console.error('Screenshot modal elements not found:', {
+            modal: !!modal,
+            closeButton: !!closeButton,
+            backdrop: !!backdrop,
+            prevButton: !!prevButton,
+            nextButton: !!nextButton
+        });
+        return;
+    }
+
+    console.log('Screenshot modal elements found, attaching listeners');
+
+    // Close button - only stopPropagation, no preventDefault
+    closeButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        console.log('Close button clicked');
+        closeScreenshotModal();
+    });
+
     // Backdrop click
-    backdrop.addEventListener('click', closeScreenshotModal);
-    
+    backdrop.addEventListener('click', (e) => {
+        e.stopPropagation();
+        console.log('Backdrop clicked');
+        closeScreenshotModal();
+    });
+
+    // Close modal when clicking modal container directly (not content)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            console.log('Modal container clicked');
+            closeScreenshotModal();
+        }
+    });
+
     // Navigation buttons
-    prevButton.addEventListener('click', () => navigateScreenshot('prev'));
-    nextButton.addEventListener('click', () => navigateScreenshot('next'));
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
+    prevButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateScreenshot('prev');
+    });
+    nextButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateScreenshot('next');
+    });
+
+    // Keyboard navigation - use a unique handler to avoid conflicts
+    const handleScreenshotKeydown = (e) => {
         if (modal.classList.contains('active')) {
+            console.log('Key pressed in screenshot modal:', e.key);
             if (e.key === 'Escape') {
+                e.preventDefault();
+                console.log('Escape key pressed, closing modal');
                 closeScreenshotModal();
             } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
                 navigateScreenshot('prev');
             } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
                 navigateScreenshot('next');
             }
         }
-    });
+    };
+
+    document.addEventListener('keydown', handleScreenshotKeydown);
 }
 
 // Initialize all project functionality
 function initProjects() {
     initProjectCards();
     initScreenshotModal();
+    initImageModal();
+}
+
+// ========== IMAGE MODAL FUNCTIONALITY ==========
+
+// Open image modal
+function openImageModal(imageSrc, caption) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    modalImage.src = imageSrc;
+    modalImage.alt = caption;
+    modalCaption.textContent = caption;
+    
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close image modal
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Initialize image modal event listeners
+function initImageModal() {
+    const modal = document.getElementById('imageModal');
+    const closeButton = document.getElementById('imageModalClose');
+    const backdrop = document.getElementById('imageModalBackdrop');
+    const modalContent = document.querySelector('.image-modal-content');
+
+    if (!modal || !closeButton || !backdrop) return;
+
+    // Close button - only stopPropagation, no preventDefault
+    closeButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeImageModal();
+    });
+
+    // Backdrop click
+    backdrop.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeImageModal();
+    });
+
+    // Close modal when clicking modal container directly (not content)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeImageModal();
+        }
+    });
+
+    // Keyboard navigation
+    const handleImageEscape = (e) => {
+        if (modal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeImageModal();
+            }
+        }
+    };
+    document.addEventListener('keydown', handleImageEscape);
 }

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Katie Hunt - Frontend Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+
+    <div class="perf-monitor">
+        <span class="fps">FPS: <span id="fps">60</span></span> | 
+        Load: <span id="loadTime">0</span>ms
+    </div>
+
+    <nav id="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <img src="images/HPE pyramid.png" alt="HPE Logo" class="logo-image">
+                <span class="logo-letter">K</span><span class="logo-letter">a</span><span class="logo-letter">t</span><span class="logo-letter">i</span><span class="logo-letter">e</span><span class="logo-space"> </span><span class="logo-letter">H</span><span class="logo-letter">u</span><span class="logo-letter">n</span><span class="logo-letter">t</span>
+            </div>
+            <a href="index.html" class="about-btn">Portfolio</a>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#playground">Interactive Game Showcase</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="theme-toggle" id="themeToggle">
+                <span class="theme-icon">🌙</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <div class="about-hero-image">
+                <img src="images/about/meetme.png" alt="Katie Hunt - Professional Photo" class="hero-photo">
+            </div>
+            <div class="about-hero-text">
+                <h1>About Katie Hunt</h1>
+                <p class="about-summary">
+                    I'm a visionary builder — blending precision, hustle, and purpose. I'm crafting an empire from the ground up, architecting custom indicators and stepping into every challenge with a mindset of "teach me, then we scale it." I engineer systems that respect risk, reward, and the economics behind every move — all backed by data, reproducibility, and intent.
+                    <br><br>
+                    I design state-of-the-art frontend web apps that are as intuitive as they are powerful — merging modular architecture with creative polish. I build blueprints. I curate wellness. I solve problems others haven't even named yet. My mission? Help people level up — through collaboration. I'm a data-driven solutionist — delivering precision, creativity, and excellence in every build.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="certifications-section">
+        <div class="about-container">
+            <h2 class="section-title">Certifications & Training</h2>
+            <div class="certifications-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">🏆</div>
+                    <h3>Developing Machine Learning Solutions Using AI</h3>
+                    <p>Advanced certification in AI and machine learning development</p>
+                    <a href="certifications/Hunt FGCU Developing Machine Learning Solutions Using AI Training.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🤖</div>
+                    <h3>Coding with Artificial Intelligence Training</h3>
+                    <p>Comprehensive AI coding and development training</p>
+                    <a href="certifications/Hunt Coding with Artificial Intelligence Training.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">⚙️</div>
+                    <h3>Fleet Certified GitOps Administrator</h3>
+                    <p>Professional GitOps administration and deployment</p>
+                    <a href="certifications/Fleet Certified GitOps Administator.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🐍</div>
+                    <h3>Programming with Python - Level 1</h3>
+                    <p>Foundation-level Python programming certification</p>
+                    <a href="certifications/TTN Programming with Python – Level 1.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🚀</div>
+                    <h3>12 Week Python Certificate</h3>
+                    <p>Intensive Python development program completion</p>
+                    <a href="certifications/QS 12 Week Python Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">📚</div>
+                    <h3>Programming Foundations with Python</h3>
+                    <p>Core programming fundamentals with Python</p>
+                    <a href="certifications/From Logic to Code_ Programming Foundations with Python.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🌐</div>
+                    <h3>TTN Web Development - Level 1</h3>
+                    <p>Professional web development certification</p>
+                    <a href="certifications/TTN Web Development level1 Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">📊</div>
+                    <h3>TTN+Cognizant Data Management Workshop</h3>
+                    <p>Enterprise data management and analytics</p>
+                    <a href="certifications/TTN+Cognizant Data Management workshop Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">📈</div>
+                    <h3>Algorithmic Trading with Python</h3>
+                    <p>Advanced financial trading algorithms and Python implementation</p>
+                    <a href="certifications/Algorithimic Trading with Python.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">📊</div>
+                    <h3>Data Analysis via Python</h3>
+                    <p>Comprehensive data analysis and visualization with Python</p>
+                    <a href="certifications/Data Analysis via Python.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🐍</div>
+                    <h3>Sanfoundry Python Certificate</h3>
+                    <p>Python programming fundamentals and best practices</p>
+                    <a href="certifications/Sanfoundry Python Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🗄️</div>
+                    <h3>SQL Beginner to Intermediate Query Writing</h3>
+                    <p>Database query writing and SQL optimization techniques</p>
+                    <a href="certifications/SQL Beginner to Intermediate Query Writing Certificate of Completion.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">⚙️</div>
+                    <h3>TTN DevOps Level 1</h3>
+                    <p>DevOps practices, CI/CD, and deployment automation</p>
+                    <a href="certifications/TTN DevOps level 1 Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section">
+        <div class="about-container">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="experience-icon">💻</div>
+                    <div class="experience-content">
+                        <h3>Front End Engineer, Independent Quantitative Researcher & Developer, Product Designer</h3>
+                        <p class="experience-company">Self-Employed | Remote</p>
+                        <p class="experience-duration">2021 – Present</p>
+                        <ul class="experience-details">
+                            <li>Developed web applications using Cursor, integrating modern front-end technologies and responsive UI/UX design</li>
+                            <li>Conduct independent quantitative research across multiple asset classes</li>
+                            <li>Built and back tested automated models with custom build risk model</li>
+                            <li>Developed risk profiling tools to optimize entry, exit, and performance conditions</li>
+                            <li>Leveraged AI for workflow automation and data-driven coding optimization</li>
+                            <li>Managed full project design lifecycles — from concept ideation and strategy to execution, testing, and delivery</li>
+                            <li>Founder, Frontend Engineer & Creative Director — The Respect Brand</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-icon">👨‍🏫</div>
+                    <div class="experience-content">
+                        <h3>Health & Physical Education Teacher</h3>
+                        <p class="experience-company">Druid Hills High School, Atlanta, GA</p>
+                        <p class="experience-duration">Sept 2018 – May 2021</p>
+                        <ul class="experience-details">
+                            <li>Designed standards-aligned curricula and assessments for 200+ students annually.</li>
+                            <li>Delivered synchronous and asynchronous instruction using LMS tools such Canvas, Google Classroom, Canva and Microsoft Teams</li>
+                            <li>Implemented targeted interventions for student improvement, curated engaging lesson plans and school-wide events</li>
+                            <li>Collaborated with administrators, parents, and multidisciplinary teams to align learning objectives with national and state goals.</li>
+                            <li>Coached sports team through disciplined training and leadership development.</li>
+                            <li>Conducted training on safety protocols and risk management during physical activities.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="education-section">
+        <div class="about-container">
+            <h2 class="section-title">Education & Background</h2>
+            <div class="education-timeline">
+                <div class="education-item">
+                    <div class="education-icon">🎓</div>
+                    <div class="education-content">
+                        <h3>MAT, Health & Physical Education</h3>
+                        <p class="education-institution">Georgia State University</p>
+                        <p class="education-year">2021 - GPA: 3.89</p>
+                    </div>
+                </div>
+                <div class="education-item">
+                    <div class="education-icon">🏛️</div>
+                    <div class="education-content">
+                        <h3>BS, Interdisciplinary Studies</h3>
+                        <p class="education-institution">Jackson State University</p>
+                        <p class="education-year">2017 - GPA: 3.159</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-contact">
+        <div class="about-container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="contact-description">Ready to collaborate on your next project?</p>
+            <div class="contact-buttons">
+                <a href="index.html#contact" class="btn btn-primary">Contact Me</a>
+                <a href="index.html" class="btn btn-secondary">Back to Portfolio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-backdrop" id="imageModalBackdrop"></div>
+        <div class="image-modal-content">
+            <button class="image-modal-close" id="imageModalClose">&times;</button>
+            <img src="" alt="Gallery Image" id="modalImage">
+            <div class="image-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-text">© 2025 Katie Hunt — Designed with Excellence</div>
+            <div class="tech-stack">
+                Built with <span>HTML5</span>, <span>CSS3</span>, <span>Canvas API</span> & <span>Vanilla JS</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
