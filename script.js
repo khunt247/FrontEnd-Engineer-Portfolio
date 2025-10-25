@@ -1228,6 +1228,19 @@ const projectScreenshots = {
             'Logout - Secure Authentication Session Management'
         ],
         currentIndex: 0
+    },
+    project5: {
+        images: [
+            'images/Project 5/Vault.png',
+            'images/Project 5/Add Password.png',
+            'images/Project 5/Settings.png'
+        ],
+        captions: [
+            'Vault - Password Dashboard with Category Organization and Real-Time Search',
+            'Add Password - Secure Credential Entry with Category Assignment and Validation',
+            'Settings - Theme Customization and Data Management Configuration'
+        ],
+        currentIndex: 0
     }
 };
 
