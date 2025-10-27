@@ -66,6 +66,10 @@ let levelProgress = 0;
 let levelCompleteThreshold = 1000;
 let levelMultiplier = 1;
 let topPlatformY = 0; // Track the highest platform Y-coordinate
+let targetTopPlatformY = 0; // Fixed target for level completion
+let maxPlatformsPerLevel = 20; // Maximum platforms to generate per level
+let platformCount = 0; // Track number of platforms generated
+let levelCompleteTriggered = false; // Flag to ensure level completion triggers only once
 
 // Player
 const player = {
@@ -126,6 +130,7 @@ function initPlatforms() {
     platforms = [];
     lastPlatformY = canvas.height - 50;
     topPlatformY = canvas.height - 50; // Initialize with starting platform
+    platformCount = 0; // Reset platform count
     
     // Starting platform
     platforms.push({
@@ -137,9 +142,12 @@ function initPlatforms() {
     });
 
     // Generate initial platforms
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < maxPlatformsPerLevel; i++) {
         generatePlatform();
     }
+    
+    // Set the fixed target for level completion (the topmost platform)
+    targetTopPlatformY = topPlatformY;
 }
 
 // Generate new platform
@@ -163,6 +171,7 @@ function generatePlatform() {
     };
     
     platforms.push(newPlatform);
+    platformCount++;
     
     // Update top platform tracking
     if (lastPlatformY < topPlatformY) {
@@ -186,9 +195,11 @@ function resetGame() {
     levelCompleteThreshold = 1000;
     levelMultiplier = 1;
     topPlatformY = canvas.height - 50; // Reset top platform tracking
+    platformCount = 0; // Reset platform count
+    levelCompleteTriggered = false; // Reset level completion flag
     gameState = 'playing';
     initPlatforms();
-    
+
     // Track game start
     gameStats.gamesPlayed++;
     gameStats.currentStreak++;
@@ -198,10 +209,30 @@ function resetGame() {
 
 // Check level completion
 function checkLevelComplete() {
-    // Check if player reached near the top platform (within 50 pixels)
-    if (gameState === 'playing' && currentLevel < maxLevel && player.y <= topPlatformY + 50) {
-        gameState = 'levelComplete';
-        levelProgress = 100;
+    // Only check if we haven't already triggered level completion
+    if (levelCompleteTriggered) return;
+
+    // Check if player reached the top platform
+    if (gameState === 'playing' && currentLevel < maxLevel) {
+        // Find the actual top platform (excluding the starting platform at the bottom)
+        const topPlatform = platforms.reduce((highest, platform) => {
+            // Exclude the starting platform (the wide one at the bottom)
+            if (platform.width === canvas.width) return highest;
+            return platform.y < highest.y ? platform : highest;
+        }, platforms[1] || platforms[0]);
+
+        // Player must be STANDING ON the top platform (landed on it)
+        // Check if player's bottom is touching the platform's top
+        const isOnTopPlatform = player.onGround &&
+                                Math.abs(player.y + player.height - topPlatform.y) < 5 &&
+                                player.x + player.width > topPlatform.x &&
+                                player.x < topPlatform.x + topPlatform.width;
+
+        if (isOnTopPlatform) {
+            gameState = 'levelComplete';
+            levelProgress = 100;
+            levelCompleteTriggered = true;
+        }
     }
 }
 
@@ -213,12 +244,13 @@ function advanceLevel() {
         levelCompleteThreshold = currentLevel * 1000;
         levelMultiplier = levelConfigs[currentLevel].multiplier;
         gameState = 'levelTransition';
-        
+        levelCompleteTriggered = false; // Reset the flag for the new level
+
         // Track level completion
         gameStats.levelsCompleted = Math.max(gameStats.levelsCompleted, currentLevel - 1);
         saveGameStats();
         updateStatsDisplay();
-        
+
         // Reset player position and physics for new level
         player.x = 200;
         player.y = 500;
@@ -230,10 +262,11 @@ function advanceLevel() {
         combo = 0;
         score = 0; // Reset score for new level
         topPlatformY = canvas.height - 50; // Reset top platform tracking
-        
+        platformCount = 0; // Reset platform count
+
         // Reset platforms for new level
         initPlatforms();
-        
+
         // Brief transition before continuing
         setTimeout(() => {
             gameState = 'playing';
@@ -295,11 +328,18 @@ function update() {
             const floorsDiff = newFloor - floor;
             score += floorsDiff * 10 * (combo + 1) * levelMultiplier;
             floor = newFloor;
-            
+
             // Update level progress based on height (how close to top platform)
-            const totalHeight = canvas.height - 50 - topPlatformY;
-            const currentHeight = canvas.height - 50 - player.y;
-            levelProgress = Math.min((currentHeight / totalHeight) * 100, 100);
+            // Find the current top platform
+            if (platforms.length > 0) {
+                const currentTopPlatform = platforms.reduce((highest, platform) => {
+                    return platform.y < highest.y ? platform : highest;
+                }, platforms[0]);
+
+                const totalHeight = canvas.height - 50 - currentTopPlatform.y;
+                const currentHeight = canvas.height - 50 - player.y;
+                levelProgress = Math.min(Math.max((currentHeight / totalHeight) * 100, 0), 100);
+            }
         }
     }
 
@@ -332,12 +372,6 @@ function update() {
 
     // Check level completion
     checkLevelComplete();
-    
-    // Also check if player reached the absolute top platform
-    if (gameState === 'playing' && currentLevel < maxLevel && player.y <= topPlatformY) {
-        gameState = 'levelComplete';
-        levelProgress = 100;
-    }
 
     // Game over if fell off screen
     if (player.y > canvas.height + 100) {
@@ -355,8 +389,8 @@ function update() {
         updateStatsDisplay();
     }
 
-    // Generate new platforms
-    if (platforms[platforms.length - 1].y > 0) {
+    // Generate new platforms only if we haven't reached the limit
+    if (platforms[platforms.length - 1].y > 0 && platformCount < maxPlatformsPerLevel) {
         generatePlatform();
     }
 

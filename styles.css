@@ -4,26 +4,30 @@
     box-sizing: border-box;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Dark Theme (Default) */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
+body[data-theme="dark"] ::-webkit-scrollbar-track,
 ::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
 }
 
+body[data-theme="dark"] ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb {
     background: #00d4ff;
     border-radius: 4px;
 }
 
+body[data-theme="dark"] ::-webkit-scrollbar-thumb:hover,
 ::-webkit-scrollbar-thumb:hover {
     background: #00b8e6;
 }
 
 /* Firefox scrollbar */
-html {
+html,
+body[data-theme="dark"] {
     scrollbar-width: thin;
     scrollbar-color: #00d4ff rgba(0, 0, 0, 0.1);
 }
@@ -382,11 +386,12 @@ html {
 
 /* Light Theme Tech Tags Enhancement */
 [data-theme="light"] .tech-tag {
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.8) 0%, 
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
         rgba(248, 250, 252, 0.9) 100%);
     border: 1px solid rgba(0, 212, 255, 0.2);
-    box-shadow: 
+    color: #001f3f;
+    box-shadow:
         0 2px 8px rgba(0, 0, 0, 0.04),
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
@@ -644,20 +649,21 @@ html {
 
 /* Light Theme Scrollbar Enhancement */
 body[data-theme="light"] ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.05) !important;
 }
 
 body[data-theme="light"] ::-webkit-scrollbar-thumb {
-    background: #001f3f;
+    background: #1e3a8a !important;
     border-radius: 4px;
 }
 
 body[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
-    background: #003366;
+    background: #1e40af !important;
 }
 
 body[data-theme="light"] {
-    scrollbar-color: #001f3f rgba(0, 0, 0, 0.05);
+    scrollbar-width: thin;
+    scrollbar-color: #1e3a8a rgba(0, 0, 0, 0.05) !important;
 }
 
 body {
@@ -2223,7 +2229,7 @@ nav {
     border: 1px solid rgba(0, 212, 255, 0.3);
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
-    color: var(--accent-primary);
+    color: #001f3f;
     font-family: 'JetBrains Mono', monospace;
     font-weight: var(--font-weight-medium);
     transition: all var(--transition-spring);
