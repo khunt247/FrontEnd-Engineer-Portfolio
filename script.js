@@ -65,6 +65,7 @@ let maxLevel = 3;
 let levelProgress = 0;
 let levelCompleteThreshold = 1000;
 let levelMultiplier = 1;
+let topPlatformY = 0; // Track the highest platform Y-coordinate
 
 // Player
 const player = {
@@ -124,6 +125,7 @@ const levelConfigs = {
 function initPlatforms() {
     platforms = [];
     lastPlatformY = canvas.height - 50;
+    topPlatformY = canvas.height - 50; // Initialize with starting platform
     
     // Starting platform
     platforms.push({
@@ -152,13 +154,20 @@ function generatePlatform() {
     const width = Math.random() * (config.maxWidth - config.minWidth) + config.minWidth;
     const x = Math.random() * (canvas.width - width);
     
-    platforms.push({
+    const newPlatform = {
         x: x,
         y: lastPlatformY,
         width: width,
         height: platformHeight,
         color: config.color
-    });
+    };
+    
+    platforms.push(newPlatform);
+    
+    // Update top platform tracking
+    if (lastPlatformY < topPlatformY) {
+        topPlatformY = lastPlatformY;
+    }
 }
 
 // Reset game
@@ -176,6 +185,7 @@ function resetGame() {
     levelProgress = 0;
     levelCompleteThreshold = 1000;
     levelMultiplier = 1;
+    topPlatformY = canvas.height - 50; // Reset top platform tracking
     gameState = 'playing';
     initPlatforms();
     
@@ -188,7 +198,8 @@ function resetGame() {
 
 // Check level completion
 function checkLevelComplete() {
-    if (score >= levelCompleteThreshold && currentLevel < maxLevel) {
+    // Check if player reached near the top platform (within 50 pixels)
+    if (gameState === 'playing' && currentLevel < maxLevel && player.y <= topPlatformY + 50) {
         gameState = 'levelComplete';
         levelProgress = 100;
     }
@@ -207,6 +218,18 @@ function advanceLevel() {
         gameStats.levelsCompleted = Math.max(gameStats.levelsCompleted, currentLevel - 1);
         saveGameStats();
         updateStatsDisplay();
+        
+        // Reset player position and physics for new level
+        player.x = 200;
+        player.y = 500;
+        player.vx = 0;
+        player.vy = 0;
+        player.onGround = false;
+        floor = 0;
+        cameraY = 0;
+        combo = 0;
+        score = 0; // Reset score for new level
+        topPlatformY = canvas.height - 50; // Reset top platform tracking
         
         // Reset platforms for new level
         initPlatforms();
@@ -272,7 +295,11 @@ function update() {
             const floorsDiff = newFloor - floor;
             score += floorsDiff * 10 * (combo + 1) * levelMultiplier;
             floor = newFloor;
-            levelProgress = Math.min((score / levelCompleteThreshold) * 100, 100);
+            
+            // Update level progress based on height (how close to top platform)
+            const totalHeight = canvas.height - 50 - topPlatformY;
+            const currentHeight = canvas.height - 50 - player.y;
+            levelProgress = Math.min((currentHeight / totalHeight) * 100, 100);
         }
     }
 
@@ -305,6 +332,12 @@ function update() {
 
     // Check level completion
     checkLevelComplete();
+    
+    // Also check if player reached the absolute top platform
+    if (gameState === 'playing' && currentLevel < maxLevel && player.y <= topPlatformY) {
+        gameState = 'levelComplete';
+        levelProgress = 100;
+    }
 
     // Game over if fell off screen
     if (player.y > canvas.height + 100) {
