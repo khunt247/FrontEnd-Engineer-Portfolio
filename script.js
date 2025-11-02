@@ -775,9 +775,11 @@ class Particle {
     draw() {
         particleCtx.beginPath();
         particleCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        // Theme-aware particle colors
+        // Theme-aware particle colors - darker for light theme for visibility
         const isDarkTheme = document.body.getAttribute('data-theme') === 'dark';
-        particleCtx.fillStyle = isDarkTheme ? 'rgba(0, 212, 255, 0.3)' : 'rgba(0, 150, 200, 0.5)';
+        particleCtx.fillStyle = isDarkTheme 
+            ? 'rgba(0, 212, 255, 0.3)' 
+            : 'rgba(30, 58, 138, 0.4)'; // Darker navy blue for light theme
         particleCtx.fill();
     }
 }
@@ -807,10 +809,10 @@ function animateParticles() {
                 particleCtx.beginPath();
                 particleCtx.moveTo(particles[i].x, particles[i].y);
                 particleCtx.lineTo(particles[j].x, particles[j].y);
-                const baseOpacity = isDarkTheme ? 0.2 : 0.35;
+                const baseOpacity = isDarkTheme ? 0.2 : 0.25;
                 particleCtx.strokeStyle = isDarkTheme 
                     ? `rgba(0, 212, 255, ${baseOpacity * (1 - distance / 120)})`
-                    : `rgba(0, 120, 180, ${baseOpacity * (1 - distance / 120)})`;
+                    : `rgba(30, 58, 138, ${baseOpacity * (1 - distance / 120)})`; // Darker navy for light theme
                 particleCtx.lineWidth = isDarkTheme ? 1 : 1.5;
                 particleCtx.stroke();
             }
@@ -867,6 +869,7 @@ if (savedTheme) {
 
 // Apply initial theme
 bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
 
 // Listen for system theme changes
@@ -874,6 +877,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
     if (!savedTheme) {
         isDark = e.matches;
         bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
     }
 });
@@ -881,6 +885,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 themeToggle.addEventListener('click', () => {
     isDark = !isDark;
     bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
     
     // Save preference

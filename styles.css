@@ -674,18 +674,38 @@ body[data-theme="light"] {
     scrollbar-color: #1e3a8a rgba(0, 0, 0, 0.05) !important;
 }
 
+html {
+    background: var(--bg-primary);
+}
+
 body {
     font-family: 'Inter', sans-serif;
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-normal);
     line-height: var(--line-height-normal);
-    background: var(--bg-primary);
+    background: transparent;
     color: var(--text-primary);
     overflow-x: hidden;
     transition: all var(--transition-normal);
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+body[data-theme="light"] {
+    background: transparent;
+}
+
+html {
+    background: var(--bg-primary);
+}
+
+html[data-theme="light"] {
+    background: linear-gradient(180deg,
+        #fefefe 0%,
+        #fafbfc 30%,
+        #f5f7fa 60%,
+        #e8eef5 100%);
 }
 
 canvas#particleCanvas {
@@ -1585,7 +1605,7 @@ nav {
 /* About Page Styles */
 .about-hero {
     padding: var(--space-20) 5%;
-    background: var(--bg-primary);
+    background: transparent;
     position: relative;
     overflow: hidden;
 }
@@ -1755,7 +1775,7 @@ nav {
 /* Certifications Section */
 .certifications-section {
     padding: var(--space-16) 5%;
-    background: var(--bg-tertiary);
+    background: transparent;
 }
 
 .certifications-grid {
@@ -1824,7 +1844,7 @@ nav {
 /* Education Section */
 .education-section {
     padding: var(--space-16) 5%;
-    background: var(--bg-secondary);
+    background: transparent;
 }
 
 .education-timeline {
@@ -1895,7 +1915,7 @@ nav {
 /* Experience Section */
 .experience-section {
     padding: var(--space-16) 5%;
-    background: var(--bg-tertiary);
+    background: transparent;
 }
 
 .experience-timeline {
@@ -1986,7 +2006,7 @@ nav {
 /* About Contact */
 .about-contact {
     padding: var(--space-16) 5%;
-    background: var(--bg-secondary);
+    background: transparent;
     text-align: center;
 }
 
