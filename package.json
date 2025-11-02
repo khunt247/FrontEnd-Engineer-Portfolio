@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "motion": "^12.23.24"
+    "motion": "^12.23.24",
+    "pdfjs-dist": "^5.4.394"
   }
 }

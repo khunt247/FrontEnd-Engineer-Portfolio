@@ -49,7 +49,7 @@ function initGameShowcase() {
 
 // ========== ICY TOWER GAME ==========
 const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas ? canvas.getContext('2d') : null;
 
 // Game State
 let gameState = 'start'; // start, playing, gameOver, levelComplete, levelTransition
@@ -89,7 +89,7 @@ const player = {
 // Platforms
 let platforms = [];
 const platformHeight = 15;
-let lastPlatformY = canvas.height - 50;
+let lastPlatformY = canvas ? canvas.height - 50 : 0;
 
 // Controls
 const keys = {};
@@ -581,6 +581,7 @@ function draw() {
 
 // Game loop
 function gameLoop() {
+    if (!canvas || !ctx) return;
     update();
     draw();
     requestAnimationFrame(gameLoop);
@@ -628,8 +629,10 @@ document.addEventListener('keyup', (e) => {
 });
 
 // Initialize and start game loop
-initPlatforms();
-gameLoop();
+if (canvas && ctx) {
+    initPlatforms();
+    gameLoop();
+}
 
 // Initialize game showcase features when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -691,7 +694,8 @@ function initEmailModal() {
     document.addEventListener('keydown', handleEmailEscape);
 
     // Copy email to clipboard
-    copyEmailBtn.addEventListener('click', async () => {
+    if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', async () => {
         try {
             const email = emailDisplay.textContent;
             await navigator.clipboard.writeText(email);
@@ -721,7 +725,8 @@ function initEmailModal() {
                 closeEmailModal();
             }, 100);
         }
-    });
+        });
+    }
 
     function openEmailModal() {
         emailModal.classList.add('active');
@@ -1000,47 +1005,51 @@ document.head.appendChild(style);
 
 // GitHub Activity Grid
 const activityGrid = document.getElementById('activityGrid');
-for (let i = 0; i < 365; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'activity-cell';
-    const level = Math.floor(Math.random() * 5);
-    if (level > 0) cell.classList.add(`level-${level}`);
-    cell.title = `${Math.floor(Math.random() * 10)} contributions`;
-    activityGrid.appendChild(cell);
+if (activityGrid) {
+    for (let i = 0; i < 365; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'activity-cell';
+        const level = Math.floor(Math.random() * 5);
+        if (level > 0) cell.classList.add(`level-${level}`);
+        cell.title = `${Math.floor(Math.random() * 10)} contributions`;
+        activityGrid.appendChild(cell);
+    }
 }
 
 // Interactive Terminal
 const terminalInput = document.getElementById('terminalInput');
-terminalInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        const command = terminalInput.value.toLowerCase();
-        const terminalContent = document.querySelector('.terminal-content');
-        
-        let response = '';
-        if (command === 'help') {
-            response = '\n$ Available commands: help, skills, contact, clear';
-        } else if (command === 'skills') {
-            response = '\n$ Skills: React, TypeScript, Next.js, Node.js, CSS3';
-        } else if (command === 'contact') {
-            response = '\n$ Email: katiehunt95@gmail.com';
-        } else if (command === 'clear') {
-            terminalContent.innerHTML = '';
+if (terminalInput) {
+    terminalInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const command = terminalInput.value.toLowerCase();
+            const terminalContent = document.querySelector('.terminal-content');
+
+            let response = '';
+            if (command === 'help') {
+                response = '\n$ Available commands: help, skills, contact, clear';
+            } else if (command === 'skills') {
+                response = '\n$ Skills: React, TypeScript, Next.js, Node.js, CSS3';
+            } else if (command === 'contact') {
+                response = '\n$ Email: katiehunt95@gmail.com';
+            } else if (command === 'clear') {
+                terminalContent.innerHTML = '';
+                terminalInput.value = '';
+                return;
+            } else {
+                response = `\n$ Command not found: ${command}. Type 'help' for commands.`;
+            }
+
+            const newLine = document.createElement('div');
+            newLine.className = 'terminal-line';
+            newLine.style.opacity = '1';
+            newLine.textContent = response;
+            terminalContent.appendChild(newLine);
             terminalInput.value = '';
-            return;
-        } else {
-            response = `\n$ Command not found: ${command}. Type 'help' for commands.`;
+
+            terminalContent.scrollTop = terminalContent.scrollHeight;
         }
-        
-        const newLine = document.createElement('div');
-        newLine.className = 'terminal-line';
-        newLine.style.opacity = '1';
-        newLine.textContent = response;
-        terminalContent.appendChild(newLine);
-        terminalInput.value = '';
-        
-        terminalContent.scrollTop = terminalContent.scrollHeight;
-    }
-});
+    });
+}
 
 
 // Performance Monitor
@@ -1442,6 +1451,154 @@ function initProjects() {
     initProjectCards();
     initScreenshotModal();
     initImageModal();
+}
+
+// ========== CERTIFICATE MODAL FUNCTIONALITY ==========
+
+// Certificate data array - Make it global and define immediately
+window.certificates = [
+    {
+        title: "Developing Machine Learning Solutions Using AI",
+        file: "certifications/Hunt FGCU Developing Machine Learning Solutions Using AI Training.pdf"
+    },
+    {
+        title: "Coding with Artificial Intelligence Training",
+        file: "certifications/Hunt Coding with Artificial Intelligence Training.pdf"
+    },
+    {
+        title: "Fleet Certified GitOps Administrator",
+        file: "certifications/Fleet Certified GitOps Administator.pdf"
+    },
+    {
+        title: "Programming with Python - Level 1",
+        file: "certifications/TTN Programming with Python – Level 1.pdf"
+    },
+    {
+        title: "12 Week Python Certificate",
+        file: "certifications/QS 12 Week Python Certificate.pdf"
+    },
+    {
+        title: "Programming Foundations with Python",
+        file: "certifications/From Logic to Code_ Programming Foundations with Python.pdf"
+    },
+    {
+        title: "TTN Web Development - Level 1",
+        file: "certifications/TTN Web Development level1 Certificate.pdf"
+    },
+    {
+        title: "TTN+Cognizant Data Management Workshop",
+        file: "certifications/TTN+Cognizant Data Management workshop Certificate.pdf"
+    },
+    {
+        title: "Algorithmic Trading with Python",
+        file: "certifications/Algorithimic Trading with Python.pdf"
+    },
+    {
+        title: "Data Analysis via Python",
+        file: "certifications/Data Analysis via Python.pdf"
+    },
+    {
+        title: "Sanfoundry Python Certificate",
+        file: "certifications/Sanfoundry Python Certificate.pdf"
+    },
+    {
+        title: "SQL Beginner to Intermediate Query Writing",
+        file: "certifications/SQL Beginner to Intermediate Query Writing Certificate of Completion.pdf"
+    },
+    {
+        title: "TTN DevOps Level 1",
+        file: "certifications/TTN DevOps level 1 Certificate.pdf"
+    }
+];
+
+// Show certificate modal - Define as regular function for global scope
+function showCert(index) {
+    console.log('showCert called with index:', index);
+    console.log('window.certificates exists?', typeof window.certificates !== 'undefined');
+    console.log('window.certificates length:', typeof window.certificates !== 'undefined' ? window.certificates.length : 'undefined');
+
+    if (typeof window.certificates === 'undefined' || index < 0 || index >= window.certificates.length) {
+        console.error('Certificate not found at index:', index);
+        return;
+    }
+
+    var cert = window.certificates[index];
+    var modal = document.getElementById('certModal');
+    var modalTitle = document.getElementById('certModalTitle');
+    var certIframe = document.getElementById('certIframe');
+
+    if (!modal || !modalTitle || !certIframe) {
+        alert('Modal elements not found! Please refresh the page.');
+        return;
+    }
+
+    // Set certificate data
+    modalTitle.innerHTML = '<b>' + cert.title + '</b>';
+    certIframe.src = cert.file;
+
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Also expose it on window for inline onclick handlers
+window.showCert = showCert;
+
+// Close certificate modal
+function closeCertModal() {
+    var modal = document.getElementById('certModal');
+    var certIframe = document.getElementById('certIframe');
+
+    if (modal && certIframe) {
+        modal.classList.remove('active');
+        certIframe.src = '';
+        document.body.style.overflow = '';
+    }
+}
+
+// Initialize certificate modal event listeners
+function initCertModal() {
+    var modal = document.getElementById('certModal');
+    var closeButton = document.getElementById('certModalClose');
+    var backdrop = document.getElementById('certModalBackdrop');
+
+    if (!modal || !closeButton || !backdrop) {
+        return;
+    }
+
+    // Close button
+    closeButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeCertModal();
+    });
+
+    // Backdrop click
+    backdrop.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeCertModal();
+    });
+
+    // Close modal when clicking modal container directly (not content)
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeCertModal();
+        }
+    });
+
+    // Keyboard navigation - ESC to close
+    document.addEventListener('keydown', function(e) {
+        if (modal.classList.contains('active') && e.key === 'Escape') {
+            e.preventDefault();
+            closeCertModal();
+        }
+    });
+}
+
+// Initialize certificate modal on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCertModal);
+} else {
+    initCertModal();
 }
 
 // ========== IMAGE MODAL FUNCTIONALITY ==========

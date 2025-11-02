@@ -62,79 +62,79 @@
                     <div class="cert-icon">🏆</div>
                     <h3>Developing Machine Learning Solutions Using AI</h3>
                     <p>Advanced certification in AI and machine learning development</p>
-                    <a href="certifications/Hunt FGCU Developing Machine Learning Solutions Using AI Training.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(0)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">🤖</div>
                     <h3>Coding with Artificial Intelligence Training</h3>
                     <p>Comprehensive AI coding and development training</p>
-                    <a href="certifications/Hunt Coding with Artificial Intelligence Training.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(1)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">⚙️</div>
                     <h3>Fleet Certified GitOps Administrator</h3>
                     <p>Professional GitOps administration and deployment</p>
-                    <a href="certifications/Fleet Certified GitOps Administator.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(2)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">🐍</div>
                     <h3>Programming with Python - Level 1</h3>
                     <p>Foundation-level Python programming certification</p>
-                    <a href="certifications/TTN Programming with Python – Level 1.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(3)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">🚀</div>
                     <h3>12 Week Python Certificate</h3>
                     <p>Intensive Python development program completion</p>
-                    <a href="certifications/QS 12 Week Python Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(4)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">📚</div>
                     <h3>Programming Foundations with Python</h3>
                     <p>Core programming fundamentals with Python</p>
-                    <a href="certifications/From Logic to Code_ Programming Foundations with Python.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(5)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">🌐</div>
                     <h3>TTN Web Development - Level 1</h3>
                     <p>Professional web development certification</p>
-                    <a href="certifications/TTN Web Development level1 Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(6)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">📊</div>
                     <h3>TTN+Cognizant Data Management Workshop</h3>
                     <p>Enterprise data management and analytics</p>
-                    <a href="certifications/TTN+Cognizant Data Management workshop Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(7)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">📈</div>
                     <h3>Algorithmic Trading with Python</h3>
                     <p>Advanced financial trading algorithms and Python implementation</p>
-                    <a href="certifications/Algorithimic Trading with Python.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(8)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">📊</div>
                     <h3>Data Analysis via Python</h3>
                     <p>Comprehensive data analysis and visualization with Python</p>
-                    <a href="certifications/Data Analysis via Python.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(9)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">🐍</div>
                     <h3>Sanfoundry Python Certificate</h3>
                     <p>Python programming fundamentals and best practices</p>
-                    <a href="certifications/Sanfoundry Python Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(10)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">🗄️</div>
                     <h3>SQL Beginner to Intermediate Query Writing</h3>
                     <p>Database query writing and SQL optimization techniques</p>
-                    <a href="certifications/SQL Beginner to Intermediate Query Writing Certificate of Completion.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(11)" class="cert-link">View Certificate</button>
                 </div>
                 <div class="cert-card">
                     <div class="cert-icon">⚙️</div>
                     <h3>TTN DevOps Level 1</h3>
                     <p>DevOps practices, CI/CD, and deployment automation</p>
-                    <a href="certifications/TTN DevOps level 1 Certificate.pdf" target="_blank" class="cert-link">View Certificate</a>
+                    <button onclick="showCert(12)" class="cert-link">View Certificate</button>
                 </div>
             </div>
         </div>
@@ -223,6 +223,16 @@
             <button class="image-modal-close" id="imageModalClose">&times;</button>
             <img src="" alt="Gallery Image" id="modalImage">
             <div class="image-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div class="cert-modal" id="certModal">
+        <div class="cert-modal-backdrop" id="certModalBackdrop"></div>
+        <div class="cert-modal-content">
+            <button class="cert-modal-close" id="certModalClose">&times;</button>
+            <div class="cert-modal-title" id="certModalTitle"></div>
+            <iframe id="certIframe" class="cert-iframe"></iframe>
         </div>
     </div>
 

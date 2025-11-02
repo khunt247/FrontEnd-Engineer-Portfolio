@@ -2091,6 +2091,147 @@ nav {
     border-left: 3px solid var(--accent-primary);
 }
 
+/* Certificate Modal */
+.cert-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.cert-modal.active {
+    display: flex;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.cert-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 34, 56, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1;
+}
+
+.cert-modal-content {
+    position: relative;
+    z-index: 2;
+    background: white;
+    border-radius: 16px;
+    padding: 32px 24px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: scaleIn 0.6s cubic-bezier(.77, 0, .18, 1);
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.cert-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+    z-index: 3;
+    line-height: 1;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cert-modal-close:hover {
+    color: #ff006e;
+    transform: scale(1.1);
+}
+
+.cert-modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1a2238;
+    margin-bottom: 18px;
+    padding-right: 40px;
+}
+
+.cert-iframe {
+    width: 60vw;
+    max-width: 600px;
+    height: 60vh;
+    border: none;
+    border-radius: 10px;
+    margin-top: 18px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    background: #eee;
+}
+
+/* Make button look like link but maintain consistent styling */
+.cert-link {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    width: auto;
+}
+
+/* Responsive certificate modal */
+@media (max-width: 768px) {
+    .cert-modal-content {
+        padding: 24px 16px;
+    }
+
+    .cert-iframe {
+        width: 85vw;
+        height: 50vh;
+    }
+
+    .cert-modal-title {
+        font-size: 1.2rem;
+        padding-right: 35px;
+    }
+
+    .cert-modal-close {
+        top: 8px;
+        right: 12px;
+        font-size: 1.5rem;
+        width: 35px;
+        height: 35px;
+    }
+}
+
 /* Skills Section */
 .skills-section {
     padding: var(--space-16) 5%;
