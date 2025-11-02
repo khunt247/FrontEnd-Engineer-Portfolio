@@ -12,19 +12,16 @@ FrontEnd Engineer Portfolio/
 ├── about.html              # About page with certifications and experience
 ├── styles.css              # Comprehensive CSS with dark/light themes
 ├── script.js               # Interactive JavaScript functionality
-├── package.json            # Dependencies (Motion.js)
+├── package.json            # Dependencies (Motion.js, pdfjs-dist)
 ├── images/                  # Project screenshots and assets
 │   ├── Project 1/          # Navigation Options Showcase screenshots
 │   ├── Project 2/          # HabitTracker screenshots
 │   ├── Project 3/          # CodeVault screenshots
 │   ├── Project 4/          # FinTech Dashboard screenshots
+│   ├── Project 5/          # PassVault screenshots
 │   └── about/              # About page images
-└── certifications/         # Professional certifications (PDFs)
-    ├── AI & ML Certificates
-    ├── Python Programming
-    ├── Web Development
-    ├── DevOps & GitOps
-    └── Data Analysis & SQL
+├── pdfjs/                   # PDF.js viewer components for certificate display
+└── certifications/         # Professional certifications (PDFs - 13 total)
 ```
 
 ## 🎯 Features
@@ -50,9 +47,11 @@ FrontEnd Engineer Portfolio/
 2. **HabitTracker** - Personal habit tracking with GSAP animations and analytics
 3. **CodeVault** - Secure code repository with client-side encryption and IndexedDB
 4. **FinTech Dashboard** - Real-time financial dashboard with TradingView integration
+5. **PassVault** - Secure password management application with category organization, real-time search, and theme support
 
 ### About Page Features
-- **Professional Certifications**: 13+ certificates in AI/ML, Python, Web Development, DevOps
+- **Professional Certifications**: 13 certificates in AI/ML, Python, Web Development, DevOps, and Data Analysis
+- **Interactive PDF Viewer**: Embedded PDF.js viewer for certificate viewing without downloads
 - **Experience Timeline**: Detailed professional background and achievements
 - **Education**: Academic credentials and achievements
 - **Interactive Gallery**: Project screenshots with modal viewing
@@ -65,6 +64,8 @@ FrontEnd Engineer Portfolio/
 - **Vanilla JavaScript** - No frameworks, pure JS for optimal performance
 - **Canvas API** - Game development and particle effects
 - **Motion.js** - Smooth animations and transitions
+- **PDF.js** - PDF viewing and rendering for certificates
+- **Web APIs** - localStorage, IndexedDB, WebSocket (for real-time features)
 
 ### Development Tools
 - **Cursor** - AI-powered code editor
@@ -80,13 +81,18 @@ FrontEnd Engineer Portfolio/
    cd "FrontEnd Engineer Portfolio"
    ```
 
-2. **Open directly in browser**:
+2. **Install dependencies** (optional, but required for full functionality):
    ```bash
-   # Simply open index.html in your browser
-   open index.html
+   npm install
    ```
 
-3. **Serve with HTTP server** (recommended for full functionality):
+3. **Open directly in browser**:
+   ```bash
+   # Simply open index.html in your browser
+   # Note: Some features (like PDF viewing) work best when served via HTTP
+   ```
+
+4. **Serve with HTTP server** (recommended for full functionality):
    ```powershell
    # Windows PowerShell
    python -m http.server 8000
@@ -100,8 +106,14 @@ FrontEnd Engineer Portfolio/
    ```
 
 ### Dependencies
-- **Motion.js**: For smooth animations (included in package.json)
+- **Motion.js** (v12.23.24): For smooth animations and transitions
+- **pdfjs-dist** (v5.4.394): For embedded PDF certificate viewing
 - **No build process required** - Pure static website
+
+Install dependencies:
+```bash
+npm install
+```
 
 ## 🎮 Interactive Features
 
@@ -125,14 +137,7 @@ FrontEnd Engineer Portfolio/
 ## 🎨 Customization
 
 ### Theme Variables
-Colors and themes are defined in CSS custom properties:
-```css
-:root {
-  --primary-color: #your-color;
-  --background: #your-bg;
-  /* ... more variables */
-}
-```
+Colors and themes are defined in CSS custom properties in `styles.css`. The portfolio supports dark and light themes with localStorage persistence. Theme variables include primary colors, backgrounds, text colors, accent colors, and glassmorphism effects.
 
 ### Game Parameters
 Adjust game difficulty in `script.js`:
@@ -152,7 +157,8 @@ Adjust game difficulty in `script.js`:
 ### Key Functions
 - **Game Engine**: `resetGame()`, `initPlatforms()`, `generatePlatform()`, `gameLoop()`
 - **Particle System**: `animateParticles()`, `createParticle()`
-- **UI Components**: Theme toggle, modal management, form handling
+- **UI Components**: Theme toggle, modal management, form handling, screenshot viewer
+- **PDF Viewer**: `showCert()` - Certificate modal with embedded PDF.js viewer
 - **Performance**: FPS monitoring, load time tracking
 
 ### File Organization

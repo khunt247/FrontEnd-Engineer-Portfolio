@@ -669,6 +669,7 @@ body[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
     background: #1e40af !important;
 }
 
+html[data-theme="light"],
 body[data-theme="light"] {
     scrollbar-width: thin;
     scrollbar-color: #1e3a8a rgba(0, 0, 0, 0.05) !important;
