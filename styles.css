@@ -932,7 +932,7 @@ nav {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: var(--space-12) 5% var(--space-8);
+    padding: calc(100px + var(--space-12)) 5% var(--space-8);
     position: relative;
     overflow: hidden;
 }
@@ -3400,7 +3400,7 @@ footer {
 
 @media (max-width: 768px) {
     .hero {
-        padding: var(--space-10) 5% var(--space-8);
+        padding: calc(90px + var(--space-10)) 5% var(--space-8);
     }
     
     .hero-text h1 {

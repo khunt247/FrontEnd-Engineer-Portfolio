@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(node --check:*)",
-      "Bash(python -m http.server:*)"
+      "Bash(python -m http.server:*)",
+      "Bash(start \"\" \"c:\\Users\\katie\\OneDrive\\Documents\\Apps\\FrontEnd Engineer Portfolio\\about.html\")",
+      "Bash(start about.html)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
