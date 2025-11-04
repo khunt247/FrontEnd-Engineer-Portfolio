@@ -3640,11 +3640,7 @@ footer {
 
 /* Enhanced Responsive Design */
 @media (max-width: 1599px) {
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2.5rem;
-        max-width: 1400px;
-    }
+    /* Removed .projects-grid override to maintain 4-column layout */
 }
 
 @media (max-width: 1200px) {
@@ -3674,11 +3670,7 @@ footer {
         gap: var(--space-8);
     }
 
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-8);
-        max-width: 100%;
-    }
+    /* Removed .projects-grid override to maintain 4-column layout */
 
     .nav-links {
         gap: var(--space-2);
@@ -3699,10 +3691,7 @@ footer {
 }
 
 @media (max-width: 1024px) {
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
+    /* Removed .projects-grid override to maintain 4-column layout */
 }
 
 @media (max-width: 768px) {
