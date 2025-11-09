@@ -1322,6 +1322,33 @@ const projectScreenshots = {
             'Settings - Theme Customization and Data Management Configuration'
         ],
         currentIndex: 0
+    },
+    project6: {
+        images: [
+            'images/Project 6/1.png',
+            'images/Project 6/2.png',
+            'images/Project 6/3.png',
+            'images/Project 6/4.png',
+            'images/Project 6/5.png',
+            'images/Project 6/6.png',
+            'images/Project 6/7.png',
+            'images/Project 6/8.png',
+            'images/Project 6/9.png',
+            'images/Project 6/10.png'
+        ],
+        captions: [
+            'Homepage - Hero Section with Mission Statement and Role Tags',
+            'About Section - Brief Introduction with Quote Card',
+            'About Section - Feature Cards (Inclusive Accessibility, Data-Driven Design, Scalable Systems)',
+            'Portfolio Section - Teaching Artifacts & Projects with Category Filters',
+            'Portfolio Section - Python Programming Projects Grid',
+            'Portfolio Section - Physical Education Curriculum Projects',
+            'Portfolio Section - Learning Methodology and Professional Development Artifacts',
+            'Skills Section - Technical Skills & Competencies Grid',
+            'Skills Section - LMS Platforms, Design Tools, and Productivity Skills',
+            'Footer Section - Contact Information and Navigation'
+        ],
+        currentIndex: 0
     }
 };
 
