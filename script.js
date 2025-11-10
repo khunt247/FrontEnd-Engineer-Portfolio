@@ -1349,6 +1349,25 @@ const projectScreenshots = {
             'Footer Section - Contact Information and Navigation'
         ],
         currentIndex: 0
+    },
+    project7: {
+        images: [
+            'images/Project 7/1.png',
+            'images/Project 7/2.png',
+            'images/Project 7/3.png',
+            'images/Project 7/4.png',
+            'images/Project 7/5.png',
+            'images/Project 7/6.png'
+        ],
+        captions: [
+            'Library Dashboard - Main Prompt Library with KPI Dashboard, Category Filters, and Prompt Cards',
+            'Create New Prompt - Modal Interface for Prompt Creation with Category Selection and Tag Management',
+            'Favorites Page - Favorited Prompts with Search Functionality and Usage Statistics',
+            'AI Insights Dashboard - Usage Analytics, Top Prompts, Usage Patterns, and AI-Generated Suggestions',
+            'Settings Page - General Settings, Sync & Backup Configuration, and Data Management Options',
+            'Settings Page - Data Management, Notifications, Privacy & Security, and Application Information'
+        ],
+        currentIndex: 0
     }
 };
 
