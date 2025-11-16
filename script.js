@@ -1368,6 +1368,31 @@ const projectScreenshots = {
             'Settings Page - Data Management, Notifications, Privacy & Security, and Application Information'
         ],
         currentIndex: 0
+    },
+    project8: {
+        images: [
+            'images/Project 8/1 lock screen.png',
+            'images/Project 8/2 dashboard.png',
+            'images/Project 8/3 + New Play 1.png',
+            'images/Project 8/3 + New Play 2.png',
+            'images/Project 8/3 + New Play 3.png',
+            'images/Project 8/4 settings 1.png',
+            'images/Project 8/4 settings 2.png',
+            'images/Project 8/keyboard shortcuts.png',
+            'images/Project 8/Pin RESET.png'
+        ],
+        captions: [
+            'Lock Screen - PIN Authentication with Secure Access and Animations',
+            'Dashboard - Trading Playbook Library with Stats Grid, Search, Filtering, and Grid/List View Modes',
+            'New Play Editor - Trade Rules Form with Entry Confirmations, Stop Loss, and Take Profit Rules',
+            'New Play Editor - Trade Rules Form with Trade Logic, Conditions, and Risk Parameters',
+            'New Play Editor - Confluence Factors, Tags & Organization, and Chart Screenshots Upload',
+            'Settings Page - Appearance Theme Selection, Risk Models, and Take Profit Models Management',
+            'Settings Page - Data & Export Options, Security Settings with PIN Change and Recovery Phrase',
+            'Keyboard Shortcuts Modal - Navigation, Search, and Play Editor Keyboard Shortcuts Reference',
+            'Reset PIN Modal - Recovery Phrase Entry Interface for PIN Reset Functionality'
+        ],
+        currentIndex: 0
     }
 };
 
