@@ -53,7 +53,7 @@
             <div class="hero-text">
                 <h1>Frontend Engineer & UI Architect</h1>
                 <p class="subtitle">Building exceptional digital experiences</p>
-                <p class="description">I specialize in crafting high-performance web applications with modern frameworks and cutting-edge design systems, turning complex problems into elegant, user-centered solutions.</p>
+                <p class="description">I specialize in crafting high-performance applications with modern frameworks and cutting-edge design systems, turning complex problems into elegant, user-centered solutions.</p>
                 
                 <div class="hero-stats">
                     <div class="stat satisfaction-stat">
@@ -81,7 +81,7 @@
                     <div class="terminal-content">
                         <div class="terminal-line"><span class="code-keyword">const</span> <span class="code-function">engineer</span> = {</div>
                         <div class="terminal-line">  name: <span class="code-string">'Katie Hunt'</span>,</div>
-                        <div class="terminal-line">  role: <span class="code-string">'Frontend Engineer'</span>,</div>
+                        <div class="terminal-line">  role: <span class="code-string">'Frontend Engineer', 'UI/UX Designer', 'Product Designer'</span>,</div>
                         <div class="terminal-line">  stack: [<span class="code-string">'React'</span>, <span class="code-string">'TypeScript'</span>, <span class="code-string">'Next.js'</span>],</div>
                         <div class="terminal-line">  passion: <span class="code-string">'Building the future'</span><span class="cursor-blink"></span></div>
                         <div class="terminal-line">};</div>
@@ -600,7 +600,10 @@
             <button class="screenshot-modal-close" id="screenshotModalClose">&times;</button>
             <button class="screenshot-nav screenshot-nav-prev" id="screenshotNavPrev">‹</button>
             <button class="screenshot-nav screenshot-nav-next" id="screenshotNavNext">›</button>
-            <img src="" alt="Project Screenshot" id="modalImage">
+            <img src="" alt="Project Screenshot" id="modalImage" style="display: none;">
+            <video id="modalVideo" controls style="display: none;">
+                Your browser does not support the video tag.
+            </video>
             <div class="screenshot-caption" id="modalCaption"></div>
         </div>
     </div>

@@ -1398,10 +1398,17 @@ const projectScreenshots = {
 
 let currentProject = null;
 
+// Helper function to check if a file is a video
+function isVideoFile(filename) {
+    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.mkv'];
+    return videoExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+}
+
 // Open screenshot modal
 function openScreenshotModal(projectId) {
     const modal = document.getElementById('screenshotModal');
     const modalImage = document.getElementById('modalImage');
+    const modalVideo = document.getElementById('modalVideo');
     const modalCaption = document.getElementById('modalCaption');
     
     currentProject = projectId;
@@ -1409,8 +1416,33 @@ function openScreenshotModal(projectId) {
     
     if (projectData) {
         projectData.currentIndex = 0;
-        modalImage.src = projectData.images[0];
-        modalImage.alt = projectData.captions[0];
+        const firstMedia = projectData.images[0] || projectData.media[0];
+        const isVideo = isVideoFile(firstMedia);
+        
+        if (isVideo) {
+            modalImage.style.display = 'none';
+            modalVideo.style.display = 'block';
+            // Clear existing sources
+            modalVideo.innerHTML = '';
+            // Add source element
+            const source = document.createElement('source');
+            source.src = firstMedia;
+            // Detect video type from extension
+            if (firstMedia.toLowerCase().endsWith('.webm')) {
+                source.type = 'video/webm';
+            } else if (firstMedia.toLowerCase().endsWith('.ogg') || firstMedia.toLowerCase().endsWith('.ogv')) {
+                source.type = 'video/ogg';
+            } else {
+                source.type = 'video/mp4';
+            }
+            modalVideo.appendChild(source);
+            modalVideo.load();
+        } else {
+            modalVideo.style.display = 'none';
+            modalImage.style.display = 'block';
+            modalImage.src = firstMedia;
+            modalImage.alt = projectData.captions[0];
+        }
         modalCaption.textContent = projectData.captions[0];
     }
     
@@ -1425,22 +1457,62 @@ function navigateScreenshot(direction) {
     
     const projectData = projectScreenshots[currentProject];
     const modalImage = document.getElementById('modalImage');
+    const modalVideo = document.getElementById('modalVideo');
     const modalCaption = document.getElementById('modalCaption');
     
-    if (direction === 'next') {
-        projectData.currentIndex = (projectData.currentIndex + 1) % projectData.images.length;
-    } else {
-        projectData.currentIndex = (projectData.currentIndex - 1 + projectData.images.length) % projectData.images.length;
+    // Pause video if playing
+    if (!modalVideo.paused) {
+        modalVideo.pause();
     }
     
-    modalImage.src = projectData.images[projectData.currentIndex];
-    modalImage.alt = projectData.captions[projectData.currentIndex];
+    const mediaArray = projectData.images || projectData.media || [];
+    
+    if (direction === 'next') {
+        projectData.currentIndex = (projectData.currentIndex + 1) % mediaArray.length;
+    } else {
+        projectData.currentIndex = (projectData.currentIndex - 1 + mediaArray.length) % mediaArray.length;
+    }
+    
+    const currentMedia = mediaArray[projectData.currentIndex];
+    const isVideo = isVideoFile(currentMedia);
+    
+    if (isVideo) {
+        modalImage.style.display = 'none';
+        modalVideo.style.display = 'block';
+        // Clear existing sources
+        modalVideo.innerHTML = '';
+        // Add source element
+        const source = document.createElement('source');
+        source.src = currentMedia;
+        // Detect video type from extension
+        if (currentMedia.toLowerCase().endsWith('.webm')) {
+            source.type = 'video/webm';
+        } else if (currentMedia.toLowerCase().endsWith('.ogg') || currentMedia.toLowerCase().endsWith('.ogv')) {
+            source.type = 'video/ogg';
+        } else {
+            source.type = 'video/mp4';
+        }
+        modalVideo.appendChild(source);
+        modalVideo.load();
+    } else {
+        modalVideo.style.display = 'none';
+        modalImage.style.display = 'block';
+        modalImage.src = currentMedia;
+        modalImage.alt = projectData.captions[projectData.currentIndex];
+    }
     modalCaption.textContent = projectData.captions[projectData.currentIndex];
 }
 
 // Close screenshot modal
 function closeScreenshotModal() {
     const modal = document.getElementById('screenshotModal');
+    const modalVideo = document.getElementById('modalVideo');
+    
+    // Pause video if playing
+    if (modalVideo && !modalVideo.paused) {
+        modalVideo.pause();
+    }
+    
     modal.classList.remove('active');
     document.body.style.overflow = '';
     currentProject = null; // Reset current project
