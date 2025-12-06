@@ -213,7 +213,7 @@ function checkLevelComplete() {
     if (levelCompleteTriggered) return;
 
     // Check if player reached the top platform
-    if (gameState === 'playing' && currentLevel < maxLevel) {
+    if (gameState === 'playing' && currentLevel <= maxLevel) {
         // Find the actual top platform (excluding the starting platform at the bottom)
         const topPlatform = platforms.reduce((highest, platform) => {
             // Exclude the starting platform (the wide one at the bottom)
@@ -433,7 +433,7 @@ function draw() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.fillStyle = '#27c93f';
-        ctx.font = 'bold 48px Inter';
+        ctx.font = 'bold 36px Inter';
         ctx.textAlign = 'center';
         ctx.fillText('LEVEL COMPLETE!', canvas.width / 2, 200);
         
@@ -475,7 +475,7 @@ function draw() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.fillStyle = '#00d4ff';
-        ctx.font = 'bold 48px Inter';
+        ctx.font = 'bold 36px Inter';
         ctx.textAlign = 'center';
         ctx.fillText('GAME COMPLETE!', canvas.width / 2, 200);
         
@@ -1400,6 +1400,9 @@ let currentProject = null;
 
 // Helper function to check if a file is a video
 function isVideoFile(filename) {
+    if (!filename || typeof filename !== 'string') {
+        return false;
+    }
     const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.mkv'];
     return videoExtensions.some(ext => filename.toLowerCase().endsWith(ext));
 }
@@ -1417,6 +1420,12 @@ function openScreenshotModal(projectId) {
     if (projectData) {
         projectData.currentIndex = 0;
         const firstMedia = projectData.images[0] || projectData.media[0];
+        
+        if (!firstMedia) {
+            console.warn('No media found for project:', projectId);
+            return;
+        }
+        
         const isVideo = isVideoFile(firstMedia);
         
         if (isVideo) {
@@ -1467,6 +1476,11 @@ function navigateScreenshot(direction) {
     
     const mediaArray = projectData.images || projectData.media || [];
     
+    if (mediaArray.length === 0) {
+        console.warn('No media available for project:', currentProject);
+        return;
+    }
+    
     if (direction === 'next') {
         projectData.currentIndex = (projectData.currentIndex + 1) % mediaArray.length;
     } else {
@@ -1474,6 +1488,12 @@ function navigateScreenshot(direction) {
     }
     
     const currentMedia = mediaArray[projectData.currentIndex];
+    
+    if (!currentMedia) {
+        console.warn('Media at index', projectData.currentIndex, 'is undefined for project:', currentProject);
+        return;
+    }
+    
     const isVideo = isVideoFile(currentMedia);
     
     if (isVideo) {
