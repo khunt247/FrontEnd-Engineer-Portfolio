@@ -1676,6 +1676,10 @@ window.certificates = [
     {
         title: "TTN DevOps Level 1",
         file: "certifications/TTN DevOps level 1 Certificate.pdf"
+    },
+    {
+        title: "AI-Powered Development with Cursor Workshop",
+        file: "certifications/AI-Powered Development with Cursor Workshop.pdf"
     }
 ];
 
