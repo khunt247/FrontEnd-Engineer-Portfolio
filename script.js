@@ -852,35 +852,19 @@ playgroundTabs.forEach(tab => {
     });
 });
 
-// Enhanced Theme Toggle with System Detection
+// Theme Toggle (Dark Mode Default)
 const themeToggle = document.getElementById('themeToggle');
 const bodyEl = document.body;
 let isDark = true;
 
-// Check system preference
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+// Respect saved preference, otherwise default to dark mode
 const savedTheme = localStorage.getItem('theme');
-
-if (savedTheme) {
-    isDark = savedTheme === 'dark';
-} else {
-    isDark = prefersDark;
-}
+isDark = savedTheme ? savedTheme === 'dark' : true;
 
 // Apply initial theme
 bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
 document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
-
-// Listen for system theme changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!savedTheme) {
-        isDark = e.matches;
-        bodyEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-        themeToggle.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
-    }
-});
 
 themeToggle.addEventListener('click', () => {
     isDark = !isDark;
