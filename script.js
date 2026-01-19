@@ -974,6 +974,62 @@ const animateCounter = (element) => {
     updateCounter();
 };
 
+// Terminal Typing Animation
+let terminalTyped = false;
+let terminalOriginalContent = null;
+
+// Store original terminal content on page load
+const terminalContent = document.querySelector('.terminal-content');
+if (terminalContent) {
+    terminalOriginalContent = terminalContent.innerHTML;
+    terminalContent.innerHTML = '';
+}
+
+// Typing animation function
+async function animateTerminalTyping() {
+    const terminalContent = document.querySelector('.terminal-content');
+    if (!terminalContent || terminalTyped || !terminalOriginalContent) return;
+    
+    terminalTyped = true;
+    
+    // Parse the original HTML to preserve structure
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(terminalOriginalContent, 'text/html');
+    const lines = Array.from(doc.body.children);
+    
+    terminalContent.innerHTML = '';
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].cloneNode(true);
+        const lineElement = document.createElement('div');
+        lineElement.className = 'terminal-line';
+        lineElement.innerHTML = '';
+        terminalContent.appendChild(lineElement);
+        
+        const text = line.textContent || '';
+        const innerHTML = line.innerHTML;
+        
+        // Type character by character
+        for (let j = 0; j < text.length; j++) {
+            lineElement.textContent = text.substring(0, j + 1);
+            await new Promise(resolve => setTimeout(resolve, 30));
+        }
+        
+        // After typing text, restore HTML structure
+        lineElement.innerHTML = innerHTML;
+        
+        // Add cursor blink to last line
+        if (i === lines.length - 1) {
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor-blink';
+            lineElement.appendChild(cursor);
+        }
+        
+        // Pause between lines
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
+}
+
 // Enhanced Intersection Observer for scroll animations
 const observerOptions = {
     threshold: 0.1,
@@ -990,6 +1046,11 @@ const observer = new IntersectionObserver((entries) => {
                     animateCounter(counter);
                 }
             });
+            
+            // Terminal typing animation
+            if (entry.target.classList.contains('terminal-card') && !terminalTyped) {
+                animateTerminalTyping();
+            }
             
             // Add animation classes for scroll-triggered elements
             entry.target.classList.add('animate-in');
@@ -1026,14 +1087,195 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// GitHub Activity Grid
+// GitHub Activity Grid - "I CAN BUILD ANYTHING" encoded
 const activityGrid = document.getElementById('activityGrid');
 if (activityGrid) {
-    for (let i = 0; i < 365; i++) {
+    // Pixel font patterns (3 columns wide, 7 rows tall)
+    // 1 = active cell (level-4 for brightest), 0 = inactive
+    const pixelFont = {
+        'I': [
+            [1,1,1],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0],
+            [1,1,1]
+        ],
+        'C': [
+            [0,1,1],
+            [1,0,0],
+            [1,0,0],
+            [1,0,0],
+            [1,0,0],
+            [1,0,0],
+            [0,1,1]
+        ],
+        'A': [
+            [0,1,0],
+            [1,0,1],
+            [1,0,1],
+            [1,1,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1]
+        ],
+        'N': [
+            [1,0,1],
+            [1,1,1],
+            [1,1,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1]
+        ],
+        'B': [
+            [1,1,0],
+            [1,0,1],
+            [1,0,1],
+            [1,1,0],
+            [1,0,1],
+            [1,0,1],
+            [1,1,0]
+        ],
+        'U': [
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [0,1,0]
+        ],
+        'L': [
+            [1,0,0],
+            [1,0,0],
+            [1,0,0],
+            [1,0,0],
+            [1,0,0],
+            [1,0,0],
+            [1,1,1]
+        ],
+        'D': [
+            [1,1,0],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,1,0]
+        ],
+        'Y': [
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0]
+        ],
+        'T': [
+            [1,1,1],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0],
+            [0,1,0]
+        ],
+        'H': [
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [1,1,1],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1]
+        ],
+        'G': [
+            [0,1,1],
+            [1,0,0],
+            [1,0,0],
+            [1,0,1],
+            [1,0,1],
+            [1,0,1],
+            [0,1,1]
+        ],
+        ' ': [
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0],
+            [0,0,0]
+        ]
+    };
+
+    // Message to encode
+    const message = "I CAN BUILD ANYTHING";
+    
+    // Calculate message width
+    let messageWidth = 0;
+    for (let char of message) {
+        messageWidth += char === ' ' ? 2 : 4; // 3 cols for letter + 1 spacing, or 2 for space
+    }
+    
+    // Add gap between message repetitions for visual separation
+    const gapBetweenMessages = 12;
+    const messageWithGap = messageWidth + gapBetweenMessages;
+    
+    // Create a wider grid that repeats the message 3 times for seamless scrolling
+    const gridHeight = 7;
+    const gridWidth = messageWithGap * 3; // Triple the message width including gaps
+    const totalCells = gridWidth * gridHeight;
+    
+    // Initialize grid with all zeros
+    const grid = Array(totalCells).fill(0);
+    
+    // Render the message 3 times across the grid
+    for (let repeat = 0; repeat < 3; repeat++) {
+        let currentCol = repeat * messageWithGap;
+        
+        // Render each character
+        for (let char of message) {
+            const pattern = pixelFont[char];
+            if (!pattern) continue;
+            
+            // Draw the character pattern
+            for (let row = 0; row < gridHeight; row++) {
+                for (let col = 0; col < 3; col++) {
+                    const cellIndex = row * gridWidth + currentCol + col;
+                    if (cellIndex < totalCells && pattern[row][col] === 1) {
+                        grid[cellIndex] = 4; // Use level 4 for maximum brightness
+                    }
+                }
+            }
+            
+            // Move to next character position (3 cols for char + 1 col spacing)
+            currentCol += char === ' ' ? 2 : 4;
+        }
+    }
+    
+    // Add some random noise to make it look more organic
+    for (let i = 0; i < totalCells; i++) {
+        if (grid[i] === 0 && Math.random() < 0.12) {
+            grid[i] = Math.floor(Math.random() * 2) + 1; // Level 1 or 2 for background noise
+        }
+    }
+    
+    // Set grid template columns dynamically
+    activityGrid.style.gridTemplateColumns = `repeat(${gridWidth}, 1fr)`;
+    activityGrid.classList.add('scrolling-grid');
+    
+    // Create the cells
+    for (let i = 0; i < totalCells; i++) {
         const cell = document.createElement('div');
         cell.className = 'activity-cell';
-        const level = Math.floor(Math.random() * 5);
-        if (level > 0) cell.classList.add(`level-${level}`);
+        const level = grid[i];
+        if (level > 0) {
+            cell.classList.add(`level-${level}`);
+        }
         cell.title = `${Math.floor(Math.random() * 10)} contributions`;
         activityGrid.appendChild(cell);
     }

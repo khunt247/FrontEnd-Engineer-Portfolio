@@ -160,13 +160,38 @@ body[data-theme="dark"] {
     --shadow-accent-cyan: 0 0 30px rgba(0, 212, 255, 0.15), 0 0 60px rgba(0, 212, 255, 0.08);
 }
 
-/* Light Mode Hero Title - Masculine Gradient */
+/* Light Mode Hero Title - Masculine Gradient with Animation */
 [data-theme="light"] .hero-text h1 {
-    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    background: linear-gradient(
+        90deg,
+        #1e3a8a 0%,
+        #0f172a 20%,
+        #2563eb 40%,
+        #1e3a8a 60%,
+        #0f172a 80%,
+        #2563eb 100%
+    );
+    background-size: 300% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 2px 4px rgba(30, 58, 138, 0.2));
+    animation: 
+        heroTitleEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
+        gradientFlow 4s linear infinite,
+        titlePulseLight 3s ease-in-out infinite;
+    filter: drop-shadow(0 2px 12px rgba(30, 58, 138, 0.5));
+}
+
+/* Light theme pulse effect */
+@keyframes titlePulseLight {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 2px 12px rgba(30, 58, 138, 0.5));
+    }
+    50% {
+        transform: scale(1.02);
+        filter: drop-shadow(0 4px 20px rgba(37, 99, 235, 0.7));
+    }
 }
 
 /* Enhanced Light Theme Glassmorphism */
@@ -1065,9 +1090,84 @@ body.menu-open {
     font-weight: var(--font-weight-extrabold);
     line-height: var(--line-height-tight);
     margin-bottom: var(--space-6);
-    color: #00d4ff;
     position: relative;
-    animation: slideInLeft 1s var(--transition-spring) 0.3s both;
+    background: linear-gradient(
+        90deg,
+        #00d4ff 0%,
+        #7b2ff7 25%,
+        #0ea5e9 50%,
+        #7b2ff7 75%,
+        #00d4ff 100%
+    );
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: 
+        heroTitleEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
+        gradientFlow 4s linear infinite,
+        titlePulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+}
+
+/* Dramatic entrance with glitch */
+@keyframes heroTitleEntrance {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) scale(0.8);
+        filter: blur(10px) drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+    20% {
+        opacity: 0.3;
+        transform: translateX(-50px) scale(0.9);
+        filter: blur(5px) drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+    40% {
+        opacity: 0.6;
+        transform: translateX(10px) scale(1.05);
+        filter: blur(2px) drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(-5px) scale(1.02);
+        filter: blur(1px) drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+    70% {
+        opacity: 1;
+        transform: translateX(3px) scale(1.01);
+        filter: blur(0) drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+    85% {
+        transform: translateX(-2px) scale(1);
+        filter: blur(0) drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0) drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+}
+
+/* Fast, visible gradient flow */
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 300% center;
+    }
+}
+
+/* Breathing pulse effect */
+@keyframes titlePulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.6));
+    }
+    50% {
+        transform: scale(1.02);
+        filter: drop-shadow(0 0 50px rgba(123, 47, 247, 0.8));
+    }
 }
 
 @keyframes slideInLeft {
@@ -1470,6 +1570,7 @@ body.menu-open {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
+    overflow: hidden; /* Hide the overflow for scrolling effect */
 }
 
 .activity-header {
@@ -1485,6 +1586,27 @@ body.menu-open {
     display: grid;
     grid-template-columns: repeat(52, 1fr);
     gap: 3px;
+    overflow: hidden;
+}
+
+/* Scrolling animation for the encoded message */
+.activity-grid.scrolling-grid {
+    animation: scrollTape 30s linear infinite;
+    will-change: transform;
+}
+
+@keyframes scrollTape {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-33.333%); /* Move by 1/3 since message repeats 3 times */
+    }
+}
+
+/* Pause animation on hover to read the message */
+.activity-grid.scrolling-grid:hover {
+    animation-play-state: paused;
 }
 
 .activity-cell {
@@ -1498,12 +1620,16 @@ body.menu-open {
 
 .activity-cell:hover {
     transform: scale(1.5);
+    z-index: 10;
 }
 
 .activity-cell.level-1 { background: rgba(0, 212, 255, 0.3); }
 .activity-cell.level-2 { background: rgba(0, 212, 255, 0.5); }
 .activity-cell.level-3 { background: rgba(0, 212, 255, 0.7); }
-.activity-cell.level-4 { background: rgba(0, 212, 255, 1); }
+.activity-cell.level-4 { 
+    background: rgba(0, 212, 255, 1); 
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+}
 
 /* Inspirational Quote Section */
 .quote-section {
@@ -3002,12 +3128,12 @@ body.menu-open {
 
 /* Projects Section */
 .projects-section {
-    padding: 8rem 5%;
+    padding: 6rem 5%;
 }
 
 .projects-section .github-activity {
     max-width: 900px;
-    margin: 0 auto var(--space-12) auto;
+    margin: 0 auto var(--space-8) auto;
     text-align: center;
 }
 
@@ -4086,6 +4212,132 @@ footer {
 
     .theme-icon {
         font-size: 1.1rem;
+    }
+}
+
+/* ========== VIEW PORTFOLIO BUTTON - PREMIUM DESIGN ========== */
+
+/* Project Buttons Container - Horizontal Layout */
+.project-buttons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Adjust expand-details-btn to work in flex container */
+.project-buttons .expand-details-btn {
+    margin-bottom: 0;
+}
+
+/* View Portfolio Button - Premium Design */
+.view-portfolio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(0, 212, 255, 0.1), 
+        rgba(30, 58, 138, 0.08), 
+        rgba(0, 212, 255, 0.1));
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: none;
+    white-space: nowrap;
+}
+
+.view-portfolio-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 212, 255, 0.2), 
+        transparent);
+    transition: left 0.6s ease;
+    z-index: 0;
+}
+
+.view-portfolio-btn:hover::before {
+    left: 100%;
+}
+
+.view-portfolio-btn:hover {
+    background: linear-gradient(135deg, 
+        rgba(0, 212, 255, 0.2), 
+        rgba(30, 58, 138, 0.15), 
+        rgba(0, 212, 255, 0.2));
+    border-color: rgba(0, 212, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
+}
+
+.view-portfolio-btn:active {
+    transform: translateY(0);
+}
+
+.btn-text {
+    z-index: 1;
+}
+
+.btn-arrow {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+.view-portfolio-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* Light Theme Support */
+[data-theme="light"] .view-portfolio-btn {
+    background: linear-gradient(135deg, 
+        rgba(30, 58, 138, 0.1), 
+        rgba(30, 58, 138, 0.08));
+    border: 2px solid rgba(30, 58, 138, 0.3);
+    box-shadow: 
+        0 4px 20px rgba(30, 58, 138, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="light"] .view-portfolio-btn:hover {
+    background: linear-gradient(135deg, 
+        rgba(30, 58, 138, 0.15), 
+        rgba(30, 58, 138, 0.12));
+    border-color: #1e3a8a;
+    box-shadow: 
+        0 8px 30px rgba(30, 58, 138, 0.25),
+        0 4px 15px rgba(30, 58, 138, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive - Stack buttons vertically on mobile */
+@media (max-width: 640px) {
+    .project-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .project-buttons .expand-details-btn,
+    .view-portfolio-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
 
