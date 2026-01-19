@@ -998,7 +998,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe elements for scroll animations
-const elementsToAnimate = document.querySelectorAll('.hero-stats, .skill-card, .project-card, .section-title, .section-subtitle, .quote-card');
+const elementsToAnimate = document.querySelectorAll('.hero-stats, .skill-card, .project-card, .section-title, .section-subtitle, .quote-card, .terminal-card');
 elementsToAnimate.forEach(element => {
     observer.observe(element);
 });
@@ -1203,6 +1203,54 @@ function initProjectCards() {
             const projectId = button.getAttribute('data-project');
             openScreenshotModal(projectId);
         });
+    });
+}
+
+// Render inline galleries inside project cards
+function renderProjectGalleries() {
+    const containers = document.querySelectorAll('.project-gallery');
+    containers.forEach(container => {
+        const projectId = container.getAttribute('data-project');
+        const data = projectScreenshots[projectId];
+        if (!data) return;
+        const mediaArray = data.images || data.media || [];
+        if (!Array.isArray(mediaArray) || mediaArray.length === 0) return;
+
+        const grid = document.createElement('div');
+        grid.className = 'gallery-grid';
+
+        const displayCount = Math.min(4, mediaArray.length);
+        for (let i = 0; i < displayCount; i++) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.setAttribute('data-index', String(i));
+
+            const img = document.createElement('img');
+            img.src = mediaArray[i];
+            const caption = Array.isArray(data.captions) ? data.captions[i] : '';
+            if (caption) img.alt = caption;
+            img.loading = 'lazy';
+
+            const overlay = document.createElement('div');
+            overlay.className = 'gallery-overlay';
+            overlay.textContent = '';
+
+            item.appendChild(img);
+            item.appendChild(overlay);
+            item.addEventListener('click', () => openScreenshotModal(projectId, i));
+            grid.appendChild(item);
+        }
+
+        if (mediaArray.length > displayCount) {
+            const more = document.createElement('div');
+            more.className = 'gallery-more';
+            more.textContent = `+${mediaArray.length - displayCount} more`;
+            more.addEventListener('click', () => openScreenshotModal(projectId, displayCount));
+            grid.appendChild(more);
+        }
+
+        container.innerHTML = '';
+        container.appendChild(grid);
     });
 }
 
@@ -1426,7 +1474,7 @@ function isVideoFile(filename) {
 }
 
 // Open screenshot modal
-function openScreenshotModal(projectId) {
+function openScreenshotModal(projectId, startIndex = 0) {
     const modal = document.getElementById('screenshotModal');
     const modalImage = document.getElementById('modalImage');
     const modalVideo = document.getElementById('modalVideo');
@@ -1436,8 +1484,10 @@ function openScreenshotModal(projectId) {
     const projectData = projectScreenshots[projectId];
     
     if (projectData) {
-        projectData.currentIndex = 0;
-        const firstMedia = projectData.images[0] || projectData.media[0];
+        const mediaArray = projectData.images || projectData.media || [];
+        const clampedIndex = Math.min(Math.max(parseInt(startIndex, 10) || 0, 0), Math.max(mediaArray.length - 1, 0));
+        projectData.currentIndex = clampedIndex;
+        const firstMedia = mediaArray[clampedIndex];
         
         if (!firstMedia) {
             console.warn('No media found for project:', projectId);
@@ -1468,9 +1518,9 @@ function openScreenshotModal(projectId) {
             modalVideo.style.display = 'none';
             modalImage.style.display = 'block';
             modalImage.src = firstMedia;
-            modalImage.alt = projectData.captions[0];
+            modalImage.alt = Array.isArray(projectData.captions) ? projectData.captions[projectData.currentIndex] : '';
         }
-        modalCaption.textContent = projectData.captions[0];
+        modalCaption.textContent = Array.isArray(projectData.captions) ? projectData.captions[projectData.currentIndex] : '';
     }
     
     // Show modal
@@ -1635,6 +1685,7 @@ function initScreenshotModal() {
 // Initialize all project functionality
 function initProjects() {
     initProjectCards();
+    renderProjectGalleries();
     initScreenshotModal();
     initImageModal();
 }
