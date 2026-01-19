@@ -1219,7 +1219,7 @@ function renderProjectGalleries() {
         const grid = document.createElement('div');
         grid.className = 'gallery-grid';
 
-        const displayCount = Math.min(4, mediaArray.length);
+        const displayCount = Math.min(2, mediaArray.length);
         for (let i = 0; i < displayCount; i++) {
             const item = document.createElement('div');
             item.className = 'gallery-item';
@@ -1241,7 +1241,7 @@ function renderProjectGalleries() {
             grid.appendChild(item);
         }
 
-        if (mediaArray.length > displayCount) {
+        if (mediaArray.length > 2) {
             const more = document.createElement('div');
             more.className = 'gallery-more';
             more.textContent = `+${mediaArray.length - displayCount} more`;
