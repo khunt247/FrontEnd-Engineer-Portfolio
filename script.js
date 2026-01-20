@@ -944,15 +944,7 @@ rippleStyle.textContent = `
 `;
 document.head.appendChild(rippleStyle);
 
-// Navbar Scroll Effect
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        navbar.classList.add('nav-scroll');
-    } else {
-        navbar.classList.remove('nav-scroll');
-    }
-});
+// Navbar Scroll Effect - Enhanced version is in the enhanced features section
 
 // Enhanced Scroll Animations
 const animateCounter = (element) => {
@@ -1012,7 +1004,7 @@ async function animateTerminalTyping() {
         // Type character by character
         for (let j = 0; j < text.length; j++) {
             lineElement.textContent = text.substring(0, j + 1);
-            await new Promise(resolve => setTimeout(resolve, 30));
+            await new Promise(resolve => setTimeout(resolve, 12));
         }
         
         // After typing text, restore HTML structure
@@ -1026,7 +1018,7 @@ async function animateTerminalTyping() {
         }
         
         // Pause between lines
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 50));
     }
 }
 
@@ -1058,8 +1050,8 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe elements for scroll animations
-const elementsToAnimate = document.querySelectorAll('.hero-stats, .skill-card, .project-card, .section-title, .section-subtitle, .quote-card, .terminal-card');
+// Observe elements for scroll animations (project-card handled separately with enhanced animations)
+const elementsToAnimate = document.querySelectorAll('.hero-stats, .skill-card, .section-title, .section-subtitle, .quote-card, .terminal-card');
 elementsToAnimate.forEach(element => {
     observer.observe(element);
 });
@@ -1264,8 +1256,11 @@ if (activityGrid) {
         }
     }
     
-    // Set grid template columns dynamically
+    // Set grid template columns dynamically to ensure full message fits
     activityGrid.style.gridTemplateColumns = `repeat(${gridWidth}, 1fr)`;
+    activityGrid.style.width = '100%';
+    activityGrid.style.minWidth = `${gridWidth * 13}px`; // Ensure grid is wide enough: (10px cell + 3px gap) × columns
+    activityGrid.style.minHeight = '91px'; // 7 rows × (10px + 3px gap) - 3px = ensure squares always visible
     activityGrid.classList.add('scrolling-grid');
     
     // Create the cells
@@ -1397,16 +1392,7 @@ function initEasterEggModal() {
 // Initialize Easter Egg modal
 initEasterEggModal();
 
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
+// Smooth Scroll - Enhanced version with offset is in the enhanced features section
 
 // ========== PROJECT CARDS FUNCTIONALITY ==========
 
@@ -2147,3 +2133,380 @@ function initImageModal() {
     };
     document.addEventListener('keydown', handleImageEscape);
 }
+
+// ========== ENHANCED ANIMATIONS & VISUAL EFFECTS ==========
+
+// Page Loader
+function initPageLoader() {
+    const loader = document.createElement('div');
+    loader.className = 'page-loader';
+    loader.innerHTML = `
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading Portfolio...</div>
+        </div>
+    `;
+    document.body.appendChild(loader);
+
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 500);
+        }, 300);
+    });
+}
+
+// Enhanced Parallax Effect
+function initParallax() {
+    const parallaxElements = document.querySelectorAll('.parallax-element');
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        parallaxElements.forEach((element, index) => {
+            const speed = 0.5 + (index * 0.1);
+            const yPos = -(scrolled * speed);
+            element.style.transform = `translateY(${yPos}px)`;
+        });
+    });
+}
+
+// Enhanced Scroll Reveal with Stagger
+function initEnhancedScrollReveal() {
+    const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('revealed');
+                }, index * 100);
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(element => {
+        revealObserver.observe(element);
+    });
+}
+
+// Enhanced Project Card Animations with Stagger
+function enhanceProjectCardAnimations() {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                }, index * 150);
+                cardObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    });
+
+    projectCards.forEach(card => {
+        cardObserver.observe(card);
+    });
+}
+
+// Magnetic Hover Effect
+function initMagneticEffect() {
+    const magneticElements = document.querySelectorAll('.magnetic, .btn, .contact-social-link');
+    
+    magneticElements.forEach(element => {
+        element.addEventListener('mousemove', (e) => {
+            const rect = element.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const moveX = x * 0.15;
+            const moveY = y * 0.15;
+            
+            element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            element.style.transform = 'translate(0, 0)';
+        });
+    });
+}
+
+// Animated Progress Bars
+function initProgressBars() {
+    const progressBars = document.querySelectorAll('.skill-progress-bar');
+    
+    const progressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const targetWidth = entry.target.getAttribute('data-width') || '100';
+                entry.target.style.width = targetWidth + '%';
+                progressObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+
+    progressBars.forEach(bar => {
+        progressObserver.observe(bar);
+    });
+}
+
+// Enhanced Smooth Scroll with Offset
+function enhanceSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const target = document.querySelector(targetId);
+            
+            if (target) {
+                const offset = 80;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// Cursor Trail Effect (Optional - can be toggled)
+function initCursorTrail() {
+    if (window.innerWidth < 768) return; // Skip on mobile
+    
+    const trail = [];
+    const trailLength = 20;
+    
+    document.addEventListener('mousemove', (e) => {
+        trail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+        
+        if (trail.length > trailLength) {
+            trail.shift();
+        }
+        
+        // Remove old trail elements
+        document.querySelectorAll('.cursor-trail').forEach(el => {
+            if (Date.now() - parseInt(el.dataset.time) > 500) {
+                el.remove();
+            }
+        });
+        
+        // Create new trail dot
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail';
+        dot.style.cssText = `
+            position: fixed;
+            left: ${e.clientX}px;
+            top: ${e.clientY}px;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.6;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        `;
+        dot.dataset.time = Date.now();
+        document.body.appendChild(dot);
+        
+        setTimeout(() => {
+            dot.style.opacity = '0';
+            setTimeout(() => dot.remove(), 300);
+        }, 100);
+    });
+}
+
+// Enhanced Navbar Scroll Effect
+function enhanceNavbarScroll() {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+    
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            navbar.classList.add('nav-scroll');
+        } else {
+            navbar.classList.remove('nav-scroll');
+        }
+        
+        // Hide/show navbar on scroll
+        if (currentScroll > lastScroll && currentScroll > 200) {
+            navbar.style.transform = 'translateY(-100%)';
+        } else {
+            navbar.style.transform = 'translateY(0)';
+        }
+        
+        lastScroll = currentScroll;
+    });
+}
+
+// Initialize all enhanced features
+document.addEventListener('DOMContentLoaded', () => {
+    initPageLoader();
+    initParallax();
+    initEnhancedScrollReveal();
+    enhanceProjectCardAnimations();
+    initMagneticEffect();
+    initProgressBars();
+    enhanceSmoothScroll();
+    // initCursorTrail(); // Uncomment if you want cursor trail
+    enhanceNavbarScroll();
+});
+
+// ========== STATE-OF-THE-ART INNOVATION FEATURES ==========
+
+// Custom Interactive Cursor
+function initCustomCursor() {
+    if (window.innerWidth < 768) return; // Skip on mobile
+    
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+    
+    const cursorDot = document.createElement('div');
+    cursorDot.className = 'custom-cursor-dot';
+    document.body.appendChild(cursorDot);
+    
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    // Smooth cursor following
+    function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.1;
+        cursorY += (mouseY - cursorY) * 0.1;
+        
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+        
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    
+    // Hover effects
+    const hoverElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-card');
+    hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        el.addEventListener('mousedown', () => cursor.classList.add('click'));
+        el.addEventListener('mouseup', () => cursor.classList.remove('click'));
+    });
+}
+
+// Interactive 3D Hero with Mouse Tracking
+function init3DHero() {
+    const heroContent = document.querySelector('.hero-content');
+    const heroText = document.querySelector('.hero-text');
+    const heroMedia = document.querySelector('.hero-media-card');
+    
+    if (!heroContent) return;
+    
+    heroContent.addEventListener('mousemove', (e) => {
+        const rect = heroContent.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        if (heroText) {
+            heroText.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(50px)`;
+        }
+        
+        if (heroMedia) {
+            heroMedia.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${-rotateY}deg) translateZ(30px)`;
+        }
+    });
+    
+    heroContent.addEventListener('mouseleave', () => {
+        if (heroText) heroText.style.transform = '';
+        if (heroMedia) heroMedia.style.transform = '';
+    });
+}
+
+// Advanced Text Reveal
+function initTextReveal() {
+    const revealElements = document.querySelectorAll('.text-reveal-word');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+}
+
+// Magnetic Text Effect
+function initMagneticText() {
+    const magneticTexts = document.querySelectorAll('.magnetic-text');
+    
+    magneticTexts.forEach(text => {
+        text.addEventListener('mousemove', (e) => {
+            const rect = text.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const moveX = x * 0.3;
+            const moveY = y * 0.3;
+            
+            text.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+        
+        text.addEventListener('mouseleave', () => {
+            text.style.transform = 'translate(0, 0)';
+        });
+    });
+}
+
+// Enhanced Particle Interactions
+function enhanceParticleInteractions() {
+    const particleZones = document.querySelectorAll('.particle-zone');
+    
+    particleZones.forEach(zone => {
+        zone.addEventListener('mouseenter', () => {
+            zone.style.transform = 'scale(1.02)';
+        });
+        zone.addEventListener('mouseleave', () => {
+            zone.style.transform = '';
+        });
+    });
+}
+
+// Initialize all state-of-the-art features
+window.addEventListener('DOMContentLoaded', () => {
+    initCustomCursor();
+    init3DHero();
+    initTextReveal();
+    initMagneticText();
+    enhanceParticleInteractions();
+});
