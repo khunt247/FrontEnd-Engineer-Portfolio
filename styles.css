@@ -1637,6 +1637,104 @@ body.menu-open {
     box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
 }
 
+/* Architecture Thinking Showcase */
+.architecture-showcase-wrapper {
+    margin: 6rem auto 3rem auto;
+    max-width: 1600px;
+    padding: 0 2rem;
+}
+
+.architecture-showcase-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+.architecture-item {
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.architecture-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 212, 255, 0.15);
+}
+
+.architecture-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.architecture-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Brain-Like Bubble Text for Architecture Section */
+.architecture-brain-text {
+    font-family: 'Fredoka One', 'Baloo 2', cursive, sans-serif;
+    color: #00d4ff !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #00d4ff !important;
+    background-clip: unset !important;
+    font-size: var(--font-size-5xl);
+    letter-spacing: 0.08em;
+    text-transform: none;
+    font-weight: 600;
+    text-shadow: 
+        2px 2px 6px rgba(0, 212, 255, 0.4),
+        -1px -1px 3px rgba(0, 212, 255, 0.3),
+        0 0 12px rgba(0, 212, 255, 0.5);
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+    animation: brainPulse 3s ease-in-out infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes brainPulse {
+    0%, 100% { 
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+    }
+    50% { 
+        transform: scale(1.02);
+        filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.7));
+    }
+}
+
+/* Responsive Design for Architecture Showcase */
+@media (max-width: 768px) {
+    .architecture-showcase-wrapper {
+        padding: 0 1rem;
+        margin: 4rem auto 2rem auto;
+    }
+    
+    .architecture-brain-text {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .architecture-showcase-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
 /* Inspirational Quote Section */
 .quote-section {
     padding: var(--space-12) 5%;
@@ -1868,10 +1966,25 @@ body.menu-open {
 .about-hero-text h1 {
     font-size: var(--font-size-6xl);
     font-weight: var(--font-weight-extrabold);
-    color: var(--accent-primary);
+    background: linear-gradient(90deg, 
+        var(--accent-primary) 0%, 
+        var(--accent-secondary) 25%,
+        var(--accent-primary) 50%,
+        var(--accent-secondary) 75%,
+        var(--accent-primary) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: aboutTitleShimmer 3s linear infinite;
     margin-top: var(--space-8);
     margin-bottom: var(--space-6);
     line-height: var(--line-height-tight);
+}
+
+@keyframes aboutTitleShimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
 }
 
 .about-summary {
@@ -2637,7 +2750,7 @@ body.menu-open {
     font-size: var(--font-size-6xl);
     font-weight: var(--font-weight-extrabold);
     margin-bottom: var(--space-4);
-    background: linear-gradient(135deg, #ffffff 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary) 40%, var(--accent-secondary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
