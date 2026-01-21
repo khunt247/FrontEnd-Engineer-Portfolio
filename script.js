@@ -1320,7 +1320,10 @@ function updateFPS() {
     frames++;
     const currentTime = performance.now();
     if (currentTime >= lastTime + 1000) {
-        document.getElementById('fps').textContent = frames;
+        const fpsElement = document.getElementById('fps');
+        if (fpsElement) {
+            fpsElement.textContent = frames;
+        }
         frames = 0;
         lastTime = currentTime;
     }
@@ -1331,7 +1334,48 @@ updateFPS();
 
 window.addEventListener('load', () => {
     const loadTime = performance.now();
-    document.getElementById('loadTime').textContent = Math.round(loadTime);
+    const loadTimeElement = document.getElementById('loadTime');
+    if (loadTimeElement) {
+        loadTimeElement.textContent = Math.round(loadTime);
+    }
+});
+
+// Performance Monitor Easter Egg - Toggle with 'P' key
+let perfMonitorVisible = localStorage.getItem('perfMonitorVisible') === 'true';
+
+// Initialize performance monitor visibility on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const perfMonitor = document.getElementById('perfMonitor');
+    if (perfMonitor && perfMonitorVisible) {
+        perfMonitor.classList.remove('hidden');
+    }
+});
+
+// Toggle performance monitor with 'P' key
+document.addEventListener('keydown', (e) => {
+    // Check if user is typing in an input field
+    const activeElement = document.activeElement;
+    const isTyping = activeElement.tagName === 'INPUT' || 
+                     activeElement.tagName === 'TEXTAREA';
+    
+    // Only toggle if not typing in an input field
+    if (!isTyping && (e.key === 'p' || e.key === 'P')) {
+        const perfMonitor = document.getElementById('perfMonitor');
+        if (perfMonitor) {
+            perfMonitorVisible = !perfMonitorVisible;
+            
+            if (perfMonitorVisible) {
+                perfMonitor.classList.remove('hidden');
+                // Add a subtle animation when showing
+                perfMonitor.style.animation = 'fadeInUp 0.3s ease';
+            } else {
+                perfMonitor.classList.add('hidden');
+            }
+            
+            // Save preference to localStorage
+            localStorage.setItem('perfMonitorVisible', perfMonitorVisible);
+        }
+    }
 });
 
 // Konami Code Easter Egg
