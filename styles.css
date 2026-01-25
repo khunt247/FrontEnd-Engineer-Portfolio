@@ -2930,6 +2930,74 @@ body.menu-open {
     box-shadow: var(--shadow-glow);
 }
 
+/* Tech tag tooltip (hover + keyboard + tap) */
+.tech-tooltip {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    pointer-events: none;
+
+    max-width: min(320px, calc(100vw - 24px));
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.25;
+    font-family: 'JetBrains Mono', monospace;
+
+    color: #fff;
+    background: rgba(10, 14, 39, 0.95);
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px) scale(0.98);
+    transition: opacity 140ms ease, transform 140ms ease, visibility 0s linear 140ms;
+}
+
+.tech-tooltip--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    transition: opacity 140ms ease, transform 140ms ease, visibility 0s;
+}
+
+.tech-tooltip::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: rgba(10, 14, 39, 0.95);
+    border-left: 1px solid rgba(0, 212, 255, 0.35);
+    border-top: 1px solid rgba(0, 212, 255, 0.35);
+}
+
+/* Optional: make it obvious tags are explainable */
+.tech-tag {
+    cursor: help;
+}
+
+/* Skills tags should be STATIC (no hover effects, no "help" cursor) */
+#skills .tech-tag {
+    cursor: default;
+}
+
+#skills .tech-tag:hover {
+    background: var(--bg-glass);
+    transform: none;
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: none;
+}
+
+#skills .tech-tag:hover::before {
+    left: -100%;
+}
+
 /* Code Playground */
 /* ========== PREMIUM GAME SHOWCASE SECTION ========== */
 .playground-section {

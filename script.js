@@ -640,6 +640,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initEmailModal();
     initProjects();
     initMobileMenu();
+    initTechTagTooltips();
 });
 
 // ========== MOBILE MENU TOGGLE ==========
@@ -673,6 +674,115 @@ function initMobileMenu() {
             }
         });
     }
+}
+
+// ========== TECH TAG TOOLTIPS (HOVER / FOCUS / TAP) ==========
+function initTechTagTooltips() {
+    const tooltipId = 'techTooltip';
+    const showDurationMs = 1600;
+    const edgePadding = 12;
+    const offset = 12;
+
+    let tooltipEl = document.getElementById(tooltipId);
+    if (!tooltipEl) {
+        tooltipEl = document.createElement('div');
+        tooltipEl.id = tooltipId;
+        tooltipEl.className = 'tech-tooltip';
+        tooltipEl.setAttribute('role', 'tooltip');
+        document.body.appendChild(tooltipEl);
+    }
+
+    const timeouts = new WeakMap();
+    let activeTarget = null;
+
+    const clearTargetTimeout = (el) => {
+        const t = timeouts.get(el);
+        if (t) window.clearTimeout(t);
+        timeouts.delete(el);
+    };
+
+    const hideTooltip = () => {
+        if (activeTarget) activeTarget.removeAttribute('aria-describedby');
+        activeTarget = null;
+        tooltipEl.classList.remove('tech-tooltip--visible');
+        tooltipEl.style.visibility = '';
+    };
+
+    const positionTooltip = (target) => {
+        const targetRect = target.getBoundingClientRect();
+        const tooltipRect = tooltipEl.getBoundingClientRect();
+
+        // Prefer showing below; flip above if it would overflow bottom.
+        const fitsBelow = targetRect.bottom + offset + tooltipRect.height <= window.innerHeight - edgePadding;
+        const top = fitsBelow
+            ? targetRect.bottom + offset
+            : Math.max(edgePadding, targetRect.top - offset - tooltipRect.height);
+
+        // Center horizontally over the tag, clamped to viewport edges.
+        const idealLeft = targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
+        const left = Math.min(
+            Math.max(edgePadding, idealLeft),
+            window.innerWidth - edgePadding - tooltipRect.width
+        );
+
+        tooltipEl.style.left = `${Math.round(left)}px`;
+        tooltipEl.style.top = `${Math.round(top)}px`;
+    };
+
+    const showTooltip = (target, tooltipText, { autoHide = false } = {}) => {
+        if (!tooltipText) return;
+
+        clearTargetTimeout(target);
+        activeTarget = target;
+
+        target.setAttribute('aria-describedby', tooltipId);
+        tooltipEl.textContent = tooltipText;
+
+        // Make it measurable without flashing.
+        tooltipEl.style.visibility = 'hidden';
+        tooltipEl.classList.add('tech-tooltip--visible');
+
+        requestAnimationFrame(() => {
+            if (!activeTarget) return;
+            positionTooltip(target);
+            tooltipEl.style.visibility = 'visible';
+        });
+
+        if (autoHide) {
+            const timeoutId = window.setTimeout(hideTooltip, showDurationMs);
+            timeouts.set(target, timeoutId);
+        }
+    };
+
+    // Hide on scroll/resize to avoid stale positioning.
+    window.addEventListener('scroll', hideTooltip, { passive: true });
+    window.addEventListener('resize', hideTooltip);
+    document.addEventListener('click', (e) => {
+        const t = e.target;
+        if (!(t instanceof Element)) return;
+        if (!t.classList.contains('tech-tag')) hideTooltip();
+    });
+
+    // Only apply these tooltips to PROJECT tech tags (not Skills section tags).
+    document.querySelectorAll('#projects .tech-tag').forEach((el) => {
+        const tagText = (el.textContent || '').trim();
+        if (!tagText) return;
+
+        const tooltipText = `Technology used: ${tagText}`;
+
+        // Helpful fallbacks / accessibility
+        el.setAttribute('title', tooltipText);
+        el.setAttribute('aria-label', tooltipText);
+        el.setAttribute('tabindex', '0');
+
+        el.addEventListener('mouseenter', () => showTooltip(el, tooltipText));
+        el.addEventListener('mouseleave', hideTooltip);
+        el.addEventListener('focus', () => showTooltip(el, tooltipText));
+        el.addEventListener('blur', hideTooltip);
+
+        // Tap/click helper: show briefly
+        el.addEventListener('click', () => showTooltip(el, tooltipText, { autoHide: true }));
+    });
 }
 
 // ========== EMAIL MODAL ==========
@@ -1496,6 +1606,12 @@ function renderProjectGalleries() {
             const item = document.createElement('div');
             item.className = 'gallery-item';
             item.setAttribute('data-index', String(i));
+            item.setAttribute('role', 'button');
+            item.setAttribute('aria-haspopup', 'dialog');
+            item.setAttribute('aria-controls', 'screenshotModal');
+            item.setAttribute('tabindex', '0');
+            item.setAttribute('title', 'Click to view image');
+            item.setAttribute('aria-label', 'Click to view image');
 
             const img = document.createElement('img');
             img.src = mediaArray[i];
@@ -1509,7 +1625,14 @@ function renderProjectGalleries() {
 
             item.appendChild(img);
             item.appendChild(overlay);
-            item.addEventListener('click', () => openScreenshotModal(projectId, i));
+            const open = () => openScreenshotModal(projectId, i);
+            item.addEventListener('click', open);
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    open();
+                }
+            });
             grid.appendChild(item);
         }
 
@@ -2451,7 +2574,7 @@ function initCustomCursor() {
     animateCursor();
     
     // Hover effects
-    const hoverElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-card');
+    const hoverElements = document.querySelectorAll('a, button, .btn, .project-card, .skill-card, .tech-tag');
     hoverElements.forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
