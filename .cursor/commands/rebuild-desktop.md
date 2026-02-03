@@ -1,0 +1,1 @@
+Rebuild the desktop app with the latest code so it matches the web browser.
