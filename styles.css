@@ -566,10 +566,17 @@ body[data-theme="dark"] {
 
 /* Light Theme About Page Enhancements */
 [data-theme="light"] .about-hero-text h1 {
-    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    background: linear-gradient(90deg, 
+        #1e3a8a 0%, 
+        #0f172a 25%,
+        #1e3a8a 50%,
+        #0f172a 75%,
+        #1e3a8a 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: aboutTitleShimmer 3s linear infinite;
     filter: drop-shadow(0 2px 4px rgba(30, 58, 138, 0.2));
 }
 
@@ -996,7 +1003,7 @@ body.menu-open {
     left: 50%;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    background: var(--accent-primary);
     transition: all var(--transition-normal);
     transform: translateX(-50%);
     border-radius: var(--radius-full);
@@ -1742,6 +1749,19 @@ body.menu-open {
     padding: 0 2rem;
 }
 
+.architecture-showcase-wrapper .architecture-brain-text {
+    margin-bottom: 0.25rem;
+}
+
+.architecture-showcase-wrapper .design-approach-subtitle {
+    margin-top: 0;
+    margin-bottom: var(--space-6);
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
 .architecture-showcase-container {
     max-width: 1600px;
     margin: 0 auto;
@@ -1835,6 +1855,10 @@ body.menu-open {
         padding: 0 1rem;
         margin: 4rem auto 2rem auto;
     }
+
+    .architecture-showcase-wrapper .design-approach-subtitle {
+        white-space: normal;
+    }
     
     .architecture-brain-text {
         font-size: var(--font-size-3xl);
@@ -1891,7 +1915,7 @@ body.menu-open {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+    background: var(--accent-primary);
     opacity: 0.8;
 }
 
@@ -2441,6 +2465,21 @@ body.menu-open {
     color: var(--accent-primary);
     position: absolute;
     left: 0;
+}
+
+.experience-role-block {
+    margin-top: var(--space-6);
+}
+
+.experience-role-block:first-of-type {
+    margin-top: 0;
+}
+
+.experience-role-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
 }
 
 /* About Contact */
@@ -3717,7 +3756,7 @@ body.menu-open {
 
 /* Contact Section */
 .contact-section {
-    padding: 8rem 5%;
+    padding: 8rem 5% 2rem 5%;
     background: rgba(255, 255, 255, 0.02);
 }
 
@@ -3732,7 +3771,7 @@ body.menu-open {
     justify-content: center;
     align-items: center;
     gap: var(--space-6);
-    margin: var(--space-8) 0 var(--space-12) 0;
+    margin: var(--space-8) 0 var(--space-4) 0;
     animation: fadeInUp 1s var(--transition-spring) 0.3s both;
 }
 
@@ -4191,7 +4230,7 @@ body.menu-open {
 
 /* Footer */
 footer {
-    padding: 3rem 5%;
+    padding: 1.5rem 5%;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
