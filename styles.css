@@ -383,6 +383,35 @@ body[data-theme="dark"] {
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
+/* Light theme: navy outline/accent for cards */
+[data-theme="light"] .terminal-card::before {
+    background: linear-gradient(90deg, transparent, #1e3a8a, transparent);
+}
+
+[data-theme="light"] .terminal-card:hover {
+    border-color: rgba(30, 58, 138, 0.5);
+}
+
+[data-theme="light"] .quote-card::before {
+    background: #1e3a8a;
+}
+
+[data-theme="light"] .quote-card:hover {
+    border-color: rgba(30, 58, 138, 0.5);
+}
+
+[data-theme="light"] .skill-card::before {
+    background: linear-gradient(90deg, transparent, rgba(30, 58, 138, 0.15), transparent);
+}
+
+[data-theme="light"] .skill-card:hover {
+    border-color: rgba(30, 58, 138, 0.5);
+}
+
+[data-theme="light"] .project-card:hover {
+    border-color: rgba(30, 58, 138, 0.5);
+}
+
 /* Light Theme Modal Enhancements */
 [data-theme="light"] .email-modal-content,
 [data-theme="light"] .screenshot-modal-content {
@@ -430,6 +459,33 @@ body[data-theme="dark"] {
 [data-theme="light"] .section-subtitle {
     color: #4a5568;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Light theme: navy accent for design approach dropdowns */
+[data-theme="light"] .design-dropdown {
+    background: linear-gradient(135deg,
+        rgba(30, 58, 138, 0.08),
+        rgba(30, 58, 138, 0.04),
+        rgba(30, 58, 138, 0.08));
+    border: 1px solid rgba(30, 58, 138, 0.35);
+}
+
+[data-theme="light"] .design-dropdown:hover {
+    border-color: rgba(30, 58, 138, 0.5);
+    box-shadow: 0 4px 20px rgba(30, 58, 138, 0.12);
+}
+
+[data-theme="light"] .design-dropdown[open] {
+    border-color: rgba(30, 58, 138, 0.5);
+    box-shadow: 0 4px 20px rgba(30, 58, 138, 0.18);
+}
+
+[data-theme="light"] .design-dropdown summary::after {
+    color: rgba(30, 58, 138, 0.9);
+}
+
+[data-theme="light"] .design-dropdown summary:hover {
+    background: rgba(30, 58, 138, 0.06);
 }
 
 [data-theme="light"] .hero-text .subtitle {
@@ -1800,20 +1856,34 @@ body.menu-open {
 /* Brain-Like Bubble Text for Architecture Section */
 .architecture-brain-text {
     font-family: 'Fredoka One', 'Baloo 2', cursive, sans-serif;
+    color: #1e3a8a !important;
+}
+
+/* Dark theme: cyan for the two architecture h3 headers */
+body[data-theme="dark"] .architecture-brain-text {
     color: #00d4ff !important;
+    -webkit-text-fill-color: #00d4ff !important;
+    text-shadow:
+        2px 2px 6px rgba(0, 212, 255, 0.4),
+        -1px -1px 3px rgba(0, 212, 255, 0.3),
+        0 0 12px rgba(0, 212, 255, 0.5);
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+}
+
+.architecture-brain-text {
     background: none !important;
     -webkit-background-clip: unset !important;
-    -webkit-text-fill-color: #00d4ff !important;
+    -webkit-text-fill-color: #1e3a8a !important;
     background-clip: unset !important;
     font-size: var(--font-size-5xl);
     letter-spacing: 0.08em;
     text-transform: none;
     font-weight: 600;
     text-shadow: 
-        2px 2px 6px rgba(0, 212, 255, 0.4),
-        -1px -1px 3px rgba(0, 212, 255, 0.3),
-        0 0 12px rgba(0, 212, 255, 0.5);
-    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+        2px 2px 6px rgba(30, 58, 138, 0.4),
+        -1px -1px 3px rgba(30, 58, 138, 0.3),
+        0 0 12px rgba(30, 58, 138, 0.5);
+    filter: drop-shadow(0 0 10px rgba(30, 58, 138, 0.5));
     animation: brainPulse 3s ease-in-out infinite;
     margin-bottom: 1rem;
 }
@@ -1821,11 +1891,11 @@ body.menu-open {
 @keyframes brainPulse {
     0%, 100% { 
         transform: scale(1);
-        filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+        filter: drop-shadow(0 0 10px rgba(30, 58, 138, 0.5));
     }
     50% { 
         transform: scale(1.02);
-        filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.7));
+        filter: drop-shadow(0 0 15px rgba(30, 58, 138, 0.7));
     }
 }
 
