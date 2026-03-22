@@ -31,18 +31,19 @@
         <div class="nav-left">
             <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <img src="images/HPE pyramid.png" alt="HPE Logo" class="logo-image">
-                <span class="logo-letter">K</span><span class="logo-letter">a</span><span class="logo-letter">t</span><span class="logo-letter">i</span><span class="logo-letter">e</span><span class="logo-space"> </span><span class="logo-letter">H</span><span class="logo-letter">u</span><span class="logo-letter">n</span><span class="logo-letter">t</span>
+                <div class="logo-text">
+                    <span class="logo-letter">K</span><span class="logo-letter">a</span><span class="logo-letter">t</span><span class="logo-letter">i</span><span class="logo-letter">e</span><span class="logo-space"> </span><span class="logo-letter">H</span><span class="logo-letter">u</span><span class="logo-letter">n</span><span class="logo-letter">t</span>
+                </div>
             </div>
-            <a href="about.html" class="about-btn">About</a>
         </div>
+        <ul class="nav-links">
+            <li><a href="about.html" class="about-btn">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#playground">Interactive Game</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
         <div class="nav-right">
-            <ul class="nav-links">
-                <li class="mobile-nav-only"><a href="about.html">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#playground">Interactive Game Showcase</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
             <div class="theme-toggle" id="themeToggle">
                 <span class="theme-icon">🌙</span>
             </div>
@@ -609,7 +610,7 @@
     </section>
 
     <section id="playground" class="playground-section">
-        <h2 class="section-title">Interactive Game Showcase</h2>
+        <h2 class="section-title">Interactive Game</h2>
         <p class="section-subtitle">A fully playable platformer game built with vanilla JavaScript and Canvas API</p>
 
         <div class="playground-container">
