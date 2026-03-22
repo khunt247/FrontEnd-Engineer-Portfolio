@@ -762,6 +762,61 @@ body[data-theme="light"] {
     box-shadow: 0 0 8px rgba(30, 58, 138, 0.6);
 }
 
+/* Light theme: nav link underline - navy instead of cyan */
+[data-theme="light"] .nav-links a::after {
+    background: #1e3a8a;
+}
+
+/* Light theme: gallery-more and expand-details-btn - navy instead of cyan */
+[data-theme="light"] .gallery-more {
+    background: rgba(30, 58, 138, 0.08);
+    border-color: rgba(30, 58, 138, 0.4);
+    color: #1e3a8a;
+}
+
+[data-theme="light"] .gallery-more:hover {
+    background: rgba(30, 58, 138, 0.15);
+    box-shadow: var(--shadow-accent-navy);
+}
+
+[data-theme="light"] .expand-details-btn {
+    background: linear-gradient(135deg,
+        rgba(30, 58, 138, 0.1),
+        rgba(30, 58, 138, 0.08),
+        rgba(30, 58, 138, 0.1));
+    border-color: rgba(30, 58, 138, 0.3);
+}
+
+[data-theme="light"] .expand-details-btn:hover {
+    background: linear-gradient(135deg,
+        rgba(30, 58, 138, 0.2),
+        rgba(30, 58, 138, 0.15),
+        rgba(30, 58, 138, 0.2));
+    border-color: rgba(30, 58, 138, 0.5);
+    box-shadow: 0 8px 25px rgba(30, 58, 138, 0.2);
+}
+
+/* Light theme: custom cursor - navy instead of cyan */
+[data-theme="light"] .custom-cursor-dot {
+    background: #1e3a8a;
+}
+
+[data-theme="light"] .custom-cursor {
+    border-color: #1e3a8a;
+    mix-blend-mode: normal;
+}
+
+[data-theme="light"] .custom-cursor.hover {
+    background: rgba(30, 58, 138, 0.1);
+    border-color: #1e3a8a;
+    mix-blend-mode: normal;
+}
+
+[data-theme="light"] .custom-cursor.click {
+    background: rgba(30, 58, 138, 0.2);
+    mix-blend-mode: normal;
+}
+
 html {
     background: var(--bg-primary);
 }
