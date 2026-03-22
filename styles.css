@@ -151,13 +151,16 @@ body[data-theme="dark"] {
     --shadow-xl: 0 20px 40px -8px rgba(0, 0, 0, 0.2), 0 8px 16px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
     --shadow-2xl: 0 32px 64px -12px rgba(0, 0, 0, 0.25), 0 16px 32px -16px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
     
-    /* Enhanced glow effects with color tinting */
-    --shadow-glow: 0 0 30px rgba(0, 212, 255, 0.15), 0 0 60px rgba(0, 212, 255, 0.08);
-    --shadow-glow-lg: 0 0 50px rgba(0, 212, 255, 0.2), 0 0 100px rgba(0, 212, 255, 0.1);
+    /* Accent colors - navy instead of cyan */
+    --accent-primary: #1e3a8a;
+    --accent-primary-hover: #1e40af;
+    
+    /* Enhanced glow effects with navy tinting */
+    --shadow-glow: 0 0 30px rgba(30, 58, 138, 0.15), 0 0 60px rgba(30, 58, 138, 0.08);
+    --shadow-glow-lg: 0 0 50px rgba(30, 58, 138, 0.2), 0 0 100px rgba(30, 58, 138, 0.1);
     
     /* Light theme specific accent glows */
     --shadow-accent-navy: 0 0 30px rgba(30, 58, 138, 0.15), 0 0 60px rgba(30, 58, 138, 0.08);
-    --shadow-accent-cyan: 0 0 30px rgba(0, 212, 255, 0.15), 0 0 60px rgba(0, 212, 255, 0.08);
 }
 
 /* Light Mode Hero Title - Masculine Gradient with Animation */
@@ -221,6 +224,13 @@ body[data-theme="dark"] {
     box-shadow: 
         0 4px 16px rgba(0, 0, 0, 0.06),
         0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .logo-letter {
+    background: var(--accent-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Light Theme Button Enhancements */
@@ -556,6 +566,31 @@ body[data-theme="dark"] {
     filter: drop-shadow(0 2px 4px rgba(30, 58, 138, 0.2));
 }
 
+[data-theme="light"] .satisfaction-stat {
+    background: linear-gradient(135deg, 
+        rgba(30, 58, 138, 0.1), 
+        rgba(30, 58, 138, 0.08), 
+        rgba(30, 58, 138, 0.1));
+    border: 1px solid rgba(30, 58, 138, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(30, 58, 138, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .satisfaction-stat::before {
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(30, 58, 138, 0.2), 
+        transparent);
+}
+
+[data-theme="light"] .satisfaction-stat:hover {
+    box-shadow: 
+        0 15px 50px rgba(30, 58, 138, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(30, 58, 138, 0.5);
+}
+
 [data-theme="light"] .satisfaction-stat .stat-number {
     background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
     -webkit-background-clip: text;
@@ -679,7 +714,7 @@ body[data-theme="dark"] {
     box-shadow: 
         0 20px 60px rgba(0, 0, 0, 0.12),
         0 8px 24px rgba(0, 0, 0, 0.08),
-        0 0 0 1px rgba(0, 212, 255, 0.2),
+        0 0 0 1px rgba(30, 58, 138, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transform: translateY(-8px) scale(1.02);
 }
@@ -701,7 +736,7 @@ body[data-theme="dark"] {
     background: linear-gradient(135deg, 
         rgba(255, 255, 255, 0.95) 0%, 
         rgba(248, 250, 252, 0.9) 100%);
-    border: 2px solid rgba(0, 212, 255, 0.3);
+    border: 2px solid rgba(30, 58, 138, 0.3);
     box-shadow: 
         0 24px 64px rgba(0, 0, 0, 0.15),
         0 8px 24px rgba(0, 0, 0, 0.1),
