@@ -1,4 +1,4 @@
-# Katie Hunt — Frontend Engineer Portfolio
+# Katie Hunt — Portfolio
 
 A comprehensive, interactive portfolio website showcasing frontend engineering expertise, built with modern web technologies and featuring an embedded platformer game.
 
@@ -7,7 +7,7 @@ Open `index.html` in your browser to view the portfolio, or serve locally for op
 
 ## 📁 Project Structure
 ```
-FrontEnd Engineer Portfolio/
+Portfolio/
 ├── index.html              # Main portfolio page
 ├── about.html              # About page with certifications and experience
 ├── styles.css              # Comprehensive CSS with dark/light themes
@@ -78,7 +78,7 @@ FrontEnd Engineer Portfolio/
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd "FrontEnd Engineer Portfolio"
+   cd "Portfolio"
    ```
 
 2. **Install dependencies** (optional, but required for full functionality):
@@ -176,5 +176,3 @@ This is a personal portfolio project. All rights reserved.
 
 ---
 
-**Built with Excellence by Katie Hunt**  
-*Frontend Engineer & UI Architect*
