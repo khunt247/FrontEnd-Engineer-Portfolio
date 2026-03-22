@@ -684,6 +684,28 @@ body[data-theme="light"] {
     scrollbar-color: #1e3a8a rgba(0, 0, 0, 0.05) !important;
 }
 
+/* Light theme: GitHub activity squares - navy instead of cyan */
+[data-theme="light"] .activity-cell {
+    background: rgba(30, 58, 138, 0.1);
+}
+
+[data-theme="light"] .activity-cell.level-1 {
+    background: rgba(30, 58, 138, 0.3);
+}
+
+[data-theme="light"] .activity-cell.level-2 {
+    background: rgba(30, 58, 138, 0.5);
+}
+
+[data-theme="light"] .activity-cell.level-3 {
+    background: rgba(30, 58, 138, 0.7);
+}
+
+[data-theme="light"] .activity-cell.level-4 {
+    background: rgba(30, 58, 138, 1);
+    box-shadow: 0 0 8px rgba(30, 58, 138, 0.6);
+}
+
 html {
     background: var(--bg-primary);
 }
