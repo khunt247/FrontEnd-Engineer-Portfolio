@@ -2395,6 +2395,9 @@ body[data-theme="dark"] .architecture-brain-text {
 }
 
 .cert-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     background: var(--bg-card);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
@@ -2433,6 +2436,7 @@ body[data-theme="dark"] .architecture-brain-text {
 
 .cert-link {
     display: inline-block;
+    margin-top: auto;
     padding: var(--space-2) var(--space-5);
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     color: white;
@@ -2448,6 +2452,16 @@ body[data-theme="dark"] .architecture-brain-text {
     transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(0, 212, 255, 0.3);
     background: linear-gradient(135deg, var(--accent-primary-hover), var(--accent-secondary-hover));
+}
+
+[data-theme="light"] .cert-link {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+}
+
+[data-theme="light"] .cert-link:hover {
+    background: linear-gradient(135deg, var(--accent-primary-hover), var(--accent-primary));
+    box-shadow: 0 6px 25px rgba(30, 58, 138, 0.3);
 }
 
 /* Education Section */
@@ -2468,7 +2482,7 @@ body[data-theme="dark"] .architecture-brain-text {
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+    background: linear-gradient(180deg, #1e3a8a, #1e40af);
 }
 
 .education-item {
@@ -2539,7 +2553,7 @@ body[data-theme="dark"] .architecture-brain-text {
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+    background: linear-gradient(180deg, #1e3a8a, #1e40af);
 }
 
 .experience-item {
@@ -3512,6 +3526,10 @@ body[data-theme="dark"] .architecture-brain-text {
     min-width: 60px;
     text-align: center;
     font-family: 'JetBrains Mono', monospace;
+}
+
+[data-theme="light"] .instruction-key {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
 }
 
 .instruction-desc {
